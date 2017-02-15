@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		11225B071E5498890036D6C9 /* MyDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11225B061E5498890036D6C9 /* MyDocument.swift */; };
 		D97DB7D71E326D6E008ABC9E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D97DB7D61E326D6E008ABC9E /* AppDelegate.swift */; };
 		D97DB7D91E326D6E008ABC9E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D97DB7D81E326D6E008ABC9E /* ViewController.swift */; };
 		D97DB7DC1E326D6E008ABC9E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D97DB7DA1E326D6E008ABC9E /* Main.storyboard */; };
@@ -15,6 +16,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		11225B061E5498890036D6C9 /* MyDocument.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyDocument.swift; sourceTree = "<group>"; };
+		11225B081E54BDF40036D6C9 /* FlowParking.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = FlowParking.entitlements; sourceTree = "<group>"; };
 		D97DB7D31E326D6E008ABC9E /* FlowParking.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FlowParking.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D97DB7D61E326D6E008ABC9E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D97DB7D81E326D6E008ABC9E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -54,12 +57,14 @@
 		D97DB7D51E326D6E008ABC9E /* FlowParking */ = {
 			isa = PBXGroup;
 			children = (
+				11225B081E54BDF40036D6C9 /* FlowParking.entitlements */,
 				D97DB7D61E326D6E008ABC9E /* AppDelegate.swift */,
 				D97DB7D81E326D6E008ABC9E /* ViewController.swift */,
 				D97DB7DA1E326D6E008ABC9E /* Main.storyboard */,
 				D97DB7DD1E326D6E008ABC9E /* Assets.xcassets */,
 				D97DB7DF1E326D6E008ABC9E /* LaunchScreen.storyboard */,
 				D97DB7E21E326D6E008ABC9E /* Info.plist */,
+				11225B061E5498890036D6C9 /* MyDocument.swift */,
 			);
 			path = FlowParking;
 			sourceTree = "<group>";
@@ -98,6 +103,11 @@
 						CreatedOnToolsVersion = 8.2.1;
 						DevelopmentTeam = WWK47579VD;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.iCloud = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -139,6 +149,7 @@
 			files = (
 				D97DB7D91E326D6E008ABC9E /* ViewController.swift in Sources */,
 				D97DB7D71E326D6E008ABC9E /* AppDelegate.swift in Sources */,
+				11225B071E5498890036D6C9 /* MyDocument.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -261,6 +272,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = FlowParking/FlowParking.entitlements;
 				DEVELOPMENT_TEAM = WWK47579VD;
 				INFOPLIST_FILE = FlowParking/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -274,6 +286,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = FlowParking/FlowParking.entitlements;
 				DEVELOPMENT_TEAM = WWK47579VD;
 				INFOPLIST_FILE = FlowParking/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -302,6 +315,7 @@
 				D97DB7E71E326D6F008ABC9E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

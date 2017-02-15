@@ -11,12 +11,28 @@ import CoreLocation
 
 class ViewController: UIViewController, CLLocationManagerDelegate {
     
+    let UBIQUITY_CONTAINER_URL = "ABCDEF12345.com.yourdomain.icloudapp"
+
+    
+    
+    //let ubiquityURL = FileManager.url(forUbiquityContainerIdentifier: UBIQUITY_CONTAINER_URL)?.appendingPathComponent("Documents")
+    
+    
+//    let ubiquityURL = FileManager.url(forUbiquityContainerIdentifier: UBIQUITY_CONTAINER_URL)?.appendingPathComponent("Documents")
+    
+    
     @IBOutlet weak var distanceLbl: UILabel!
     @IBOutlet weak var rawDistanceLbl: UILabel!
     @IBOutlet weak var accuracyLbl: UILabel!
     
     var locationManager: CLLocationManager!
-
+    
+    //UIDocument variables
+    var document: MyDocument?
+    var documentURL: URL?
+    var ubiquityURL: URL?
+    var metaDataQuery: NSMetadataQuery?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -27,7 +43,39 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         view.backgroundColor = UIColor.gray
         print("did load")
         
+        let filemgr = FileManager.default
+        
+        //icloud Document
+        ubiquityURL = filemgr.url(forUbiquityContainerIdentifier: nil)
+        
+        guard ubiquityURL != nil else {
+            print("Unable to access iCloud Account")
+            print("Open the Settings app and enter your Apple ID into iCloud settings")
+            return
+        }
+        ubiquityURL =
+            ubiquityURL?.appendingPathComponent("Documents/savefile.txt")
+        
+        metaDataQuery = NSMetadataQuery()
+        
+        metaDataQuery?.predicate =
+            NSPredicate(format: "%K like 'savefile.txt'",
+                        NSMetadataItemFSNameKey)
+        metaDataQuery?.searchScopes = [NSMetadataQueryUbiquitousDocumentsScope]
+        
+//        NotificationCenter.default.addObserver(self,
+//                                               selector: #selector(
+//                                                ViewController.metadataQueryDidFinishGathering),
+//                                               name: NSNotification.Name.NSMetadataQueryDidFinishGathering,
+//                                               object: metaDataQuery!)
+//        
+        metaDataQuery!.start()
+        
+        
+        
+        
     }
+
     
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         if status == .authorizedAlways {
@@ -57,7 +105,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         else {
             NSLog("Invalid UUID format")
         }
-        
+
     }
     
     func locationManager(_ manager: CLLocationManager, didRangeBeacons beacons: [CLBeacon], in region: CLBeaconRegion) {
@@ -65,41 +113,41 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         //print(manager.desiredAccuracy)
         
         if beacons.count > 0 {
-            self.rawDistanceLbl.text = "\(beacons[0].rssi)"
-            updateDistance(beacons[0].proximity)
+            //self.rawDistanceLbl.text = "\(beacons[0].rssi)"
+            //updateDistance(beacons[0].proximity)
             print("found more than one beacon")
             //minor: 4608
-            print(beacons[0].minor)
+            //print(beacons[0].minor)
             //printing all info for the beacon
-            self.accuracyLbl.text = "\(beacons[1].rssi)"
+            //self.accuracyLbl.text = "\(beacons[0].rssi)"
             print("beacon 1 ")
-            print(beacons[0].minor)
-            print("beacon 2 ")
-            print(beacons[1].minor)
-            print("beacon 3 ")
-            print(beacons[2].minor)
-            print("beacon 4 ")
-            print(beacons[3].minor)
-            print("beacon 5 ")
-            print(beacons[4].minor)
-            print("beacon 6")
-            print(beacons[5].minor)
-            print("beacon 7 ")
-            print(beacons[6].minor)
-            print("beacon 8 ")
-            print(beacons[7].minor)
-            print("beacon 9 ")
-            print(beacons[8].minor)
-            print("beacon 10 ")
-            print(beacons[9].minor)
-            print("beacon 11 ")
-            print(beacons[10].minor)
-            print("beacon 12 ")
-            print(beacons[11].minor)
-            print("beacon 13")
-            print(beacons[12].minor)
-            print("beacon 14 ")
-            print(beacons[13].minor)
+            //print(beacons[0].minor)
+//            print("beacon 2 ")
+//            print(beacons[1].minor)
+//            print("beacon 3 ")
+//            print(beacons[2].minor)
+//            print("beacon 4 ")
+//            print(beacons[3].minor)
+//            print("beacon 5 ")
+//            print(beacons[4].minor)
+//            print("beacon 6")
+//            print(beacons[5].minor)
+//            print("beacon 7 ")
+//            print(beacons[6].minor)
+//            print("beacon 8 ")
+//            print(beacons[7].minor)
+//            print("beacon 9 ")
+//            print(beacons[8].minor)
+//            print("beacon 10 ")
+//            print(beacons[9].minor)
+//            print("beacon 11 ")
+//            print(beacons[10].minor)
+//            print("beacon 12 ")
+//            print(beacons[11].minor)
+//            print("beacon 13")
+//            print(beacons[12].minor)
+//            print("beacon 14 ")
+//            print(beacons[13].minor)
 
         } else {
             
