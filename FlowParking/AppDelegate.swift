@@ -1,13 +1,12 @@
 //
 //  AppDelegate.swift
-//  FlowParking
+//  flowPark
 //
-//  Created by Pavlos Nicolaou on 20/01/2017.
-//  Copyright © 2017 Pavlos Nicolaou. All rights reserved.
+//  Created by Diana Karina Vainberg Gauna on 16/02/2017.
+//  Copyright © 2017 Diana Karina Vainberg Gauna. All rights reserved.
 //
 
 import UIKit
-import Social
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
