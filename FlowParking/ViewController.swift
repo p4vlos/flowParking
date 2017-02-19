@@ -11,27 +11,17 @@ import CoreLocation
 
 class ViewController: UIViewController, CLLocationManagerDelegate {
     
-    let UBIQUITY_CONTAINER_URL = "ABCDEF12345.com.yourdomain.icloudapp"
-
-    
-    
-    //let ubiquityURL = FileManager.url(forUbiquityContainerIdentifier: UBIQUITY_CONTAINER_URL)?.appendingPathComponent("Documents")
-    
-    
-//    let ubiquityURL = FileManager.url(forUbiquityContainerIdentifier: UBIQUITY_CONTAINER_URL)?.appendingPathComponent("Documents")
-    
     
     @IBOutlet weak var distanceLbl: UILabel!
     @IBOutlet weak var rawDistanceLbl: UILabel!
     @IBOutlet weak var accuracyLbl: UILabel!
     
     var locationManager: CLLocationManager!
+    var report = ""
     
     //UIDocument variables
     var document: MyDocument?
     var documentURL: URL?
-    var ubiquityURL: URL?
-    var metaDataQuery: NSMetadataQuery?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,37 +35,66 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         
         let filemgr = FileManager.default
         
-        //icloud Document
-        ubiquityURL = filemgr.url(forUbiquityContainerIdentifier: nil)
+        let dirPaths = filemgr.urls(for: .documentDirectory,
+                                    in: .userDomainMask)
         
-        guard ubiquityURL != nil else {
-            print("Unable to access iCloud Account")
-            print("Open the Settings app and enter your Apple ID into iCloud settings")
-            return
+        documentURL = dirPaths[0].appendingPathComponent("Savefile.txt")
+        
+        document = MyDocument(fileURL: documentURL!)
+        document!.userText = "this is what we need to save"
+        
+        if filemgr.fileExists(atPath: (documentURL?.path)!) {
+            
+            document?.open(completionHandler: {(success: Bool) -> Void in
+                if success {
+                    print("File open OK")
+                    //print(self.document?.userText)
+                } else {
+                    print("Failed to open file")
+                }
+            })
+        } else {
+            document?.save(to: documentURL!, for: .forCreating,
+                           completionHandler: {(success: Bool) -> Void in
+                            if success {
+                                print("File created OK")
+                            } else {
+                                print("Failed to create file ")
+                            }
+            })
         }
-        ubiquityURL =
-            ubiquityURL?.appendingPathComponent("Documents/savefile.txt")
+
         
-        metaDataQuery = NSMetadataQuery()
-        
-        metaDataQuery?.predicate =
-            NSPredicate(format: "%K like 'savefile.txt'",
-                        NSMetadataItemFSNameKey)
-        metaDataQuery?.searchScopes = [NSMetadataQueryUbiquitousDocumentsScope]
-        
-//        NotificationCenter.default.addObserver(self,
-//                                               selector: #selector(
-//                                                ViewController.metadataQueryDidFinishGathering),
-//                                               name: NSNotification.Name.NSMetadataQueryDidFinishGathering,
-//                                               object: metaDataQuery!)
-//        
-        metaDataQuery!.start()
-        
+       // saveDocument()
         
         
         
     }
 
+    func saveDocument() {
+        document!.userText = "Here is the saved document"
+        
+        document?.save(to: documentURL!,
+                       for: .forOverwriting,
+                       completionHandler: {(success: Bool) -> Void in
+                        if success {
+                            print("File overwrite OK")
+                        } else {
+                            print("File overwrite failed")
+                        }
+        })
+        
+    }
+    
+    //Share button Outlet
+    @IBAction func shareButtonClicked(_ sender: Any) {
+        let message = report
+        
+        let sheet = UIActivityViewController(
+            activityItems: [message],
+            applicationActivities: nil)
+        self.present(sheet, animated: true, completion: nil)
+    }
     
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         if status == .authorizedAlways {
@@ -89,7 +108,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
             }
         }
     }
-
+    
     func startScanning() {
         print("start Scanning")
         //let uuid = UUID(uuidString: "f7826da6-4fa2-4e98-8024-bc5b71e0893e")!
@@ -113,41 +132,56 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         //print(manager.desiredAccuracy)
         
         if beacons.count > 0 {
-            //self.rawDistanceLbl.text = "\(beacons[0].rssi)"
-            //updateDistance(beacons[0].proximity)
+            self.rawDistanceLbl.text = "\(beacons[0].rssi)"
+            updateDistance(beacons[0].proximity)
             print("found more than one beacon")
+            
+            report.append("0: RSSI of \(beacons[0].minor) is ")
+            report.append("\(beacons[0].rssi)\n")
+            //timestamp
+            report.append("1: RSSI of \(beacons[1].minor) is ")
+            report.append("\(beacons[1].rssi)\n")
+            //timestamp
+            report.append("2: RSSI of \(beacons[2].minor) is ")
+            report.append("\(beacons[2].rssi)\n")
+            //timestamp
+            report.append("3: RSSI of \(beacons[3].minor) is ")
+            report.append("\(beacons[3].rssi)\n")
+            //timestamp
+
+            
             //minor: 4608
             //print(beacons[0].minor)
             //printing all info for the beacon
-            //self.accuracyLbl.text = "\(beacons[0].rssi)"
-            print("beacon 1 ")
-            //print(beacons[0].minor)
+            self.accuracyLbl.text = "\(beacons[1].rssi)"
+//            print("beacon 1 ")
+//            print(beacons[0].rssi)
 //            print("beacon 2 ")
-//            print(beacons[1].minor)
+//            print(beacons[1].rssi)
 //            print("beacon 3 ")
-//            print(beacons[2].minor)
+//            print(beacons[2].rssi)
 //            print("beacon 4 ")
-//            print(beacons[3].minor)
+//            print(beacons[3].rssi)
 //            print("beacon 5 ")
-//            print(beacons[4].minor)
+//            print(beacons[4].rssi)
 //            print("beacon 6")
-//            print(beacons[5].minor)
+//            print(beacons[5].rssi)
 //            print("beacon 7 ")
-//            print(beacons[6].minor)
+//            print(beacons[6].rssi)
 //            print("beacon 8 ")
-//            print(beacons[7].minor)
+//            print(beacons[7].rssi)
 //            print("beacon 9 ")
-//            print(beacons[8].minor)
+//            print(beacons[8].rssi)
 //            print("beacon 10 ")
-//            print(beacons[9].minor)
+//            print(beacons[9].rssi)
 //            print("beacon 11 ")
-//            print(beacons[10].minor)
+//            print(beacons[10].rssi)
 //            print("beacon 12 ")
-//            print(beacons[11].minor)
+//            print(beacons[11].rssi)
 //            print("beacon 13")
-//            print(beacons[12].minor)
+//            print(beacons[12].rssi)
 //            print("beacon 14 ")
-//            print(beacons[13].minor)
+//            print(beacons[13].rssi)
 
         } else {
             

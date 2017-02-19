@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Social
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
