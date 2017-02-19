@@ -100,16 +100,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
                 self.accuracyLbl.text = "\(beacons[i].accuracy)"
                 self.rssiLbl.text = "\(beacons[i].rssi)"
             }
-        
-        
-            print("found more than one beacon")
-            //minor: 4608
-            print(beacons[0].minor)
-            //printing all info for the beacon
-            self.minorLbl.text = "\(beacons[0].minor)"
-            self.accuracyLbl.text = "\(beacons[0].accuracy)"
-            self.rssiLbl.text = "\(beacons[0].rssi)"
-            
         } else {
             
             
