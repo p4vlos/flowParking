@@ -94,16 +94,16 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
                 
                 print("found more than one beacon")
                 //minor: 4608
-                print(beacons[i].minor)
+                //print(beacons[i].minor)
                 //printing all info for the beacon
-                self.minorLbl.text = "\(beacons[i].minor)"
-                self.accuracyLbl.text = "\(beacons[i].accuracy)"
-                self.rssiLbl.text = "\(beacons[i].rssi)"
+                self.minorLbl.text = "Beacon's Minor: \(beacons[0].minor)"
+                self.accuracyLbl.text = "Beacon's Accuracy: \(beacons[0].accuracy)"
+                self.rssiLbl.text = "Beacon's RSSI: \(beacons[0].rssi)"
             }
         } else {
             
             
-            print("no beacons")
+            //print("no beacons")
             
             // create the alert
             let alert = UIAlertController(title: "No beacons around", message: "Out of range", preferredStyle: UIAlertControllerStyle.alert)
@@ -121,22 +121,22 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
             switch distance {
             case .unknown:
                 self.view.backgroundColor = UIColor.gray
-                self.distanceLbl.text = "UNKNOWN"
+                self.distanceLbl.text = "Proximity Unknonw"
                 print("distance Unknown")
                 self.message += "Distance: unknown \n"
             case .far:
                 self.view.backgroundColor = UIColor.blue
-                self.distanceLbl.text = "FAR"
+                self.distanceLbl.text = "Proximity Far"
                 print("distance Far")
                 self.message += "Distance: far \n"
             case .near:
                 self.view.backgroundColor = UIColor.orange
-                self.distanceLbl.text = "NEAR"
+                self.distanceLbl.text = "Proximity Near"
                 print("distance Near")
                 self.message += "Distance: near \n"
             case .immediate:
                 self.view.backgroundColor = UIColor.red
-                self.distanceLbl.text = "IMMEDIATE"
+                self.distanceLbl.text = "Proximity Immediate"
                 print("distance Immediate")
                 self.message += "Distance: immediate \n"
             }
