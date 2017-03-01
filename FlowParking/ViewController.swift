@@ -89,8 +89,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         
         if beacons.count > 0 {
             for i in 0..<beacons.count{
-                message += "---- Time: \(time) Beacon(\(i)) Minor: \(beacons[i].minor) RSSI: \(beacons[i].rssi) Accuracy: \(beacons[i].accuracy) "
-                updateDistance(beacons[i].proximity)
+                message += "---- Time: \(time) Beacon(\(0)) Minor: \(beacons[0].minor) RSSI: \(beacons[0].rssi) Accuracy: \(beacons[i].accuracy) "
+                updateDistance(beacons[0].proximity)
                 
                 print("found more than one beacon")
                 //minor: 4608
