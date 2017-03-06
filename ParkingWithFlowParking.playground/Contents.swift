@@ -8,11 +8,11 @@ let earthR = 6371
 let LatA = CDouble(37.418436)
 let LonA = CDouble(-121.963477)
 let DistA = 0.265710701754
-let LatB = (37.417243
-let LonB = -121.961889
+let LatB = CDouble(37.417243)
+let LonB = CDouble(-121.961889)
 let DistB = 0.234592423446
-let LatC = 37.418692
-let LonC = -121.960194
+let LatC = CDouble(37.418692)
+let LonC = CDouble(-121.960194)
 let DistC = 0.0548954278262
 
 //#using authalic sphere
