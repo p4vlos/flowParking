@@ -89,7 +89,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         
         if beacons.count > 0 {
             for i in 0..<beacons.count{
-                message += "---- Time: \(time) Beacon(\(0)) Minor: \(beacons[0].minor) RSSI: \(beacons[0].rssi) Accuracy: \(beacons[i].accuracy) "
+                message += "---- Time: \(time) Beacon(\(0)) Minor: \(beacons[0].minor) RSSI: \(beacons[0].rssi) Accuracy: \(beacons[0].accuracy) "
                 updateDistance(beacons[0].proximity)
                 
                 print("found more than one beacon")
@@ -101,10 +101,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
                 self.rssiLbl.text = "Beacon's RSSI: \(beacons[0].rssi)"
             }
         } else {
-            
-            
-            //print("no beacons")
-            
+            // No beacons around Alert
             // create the alert
             let alert = UIAlertController(title: "No beacons around", message: "Out of range", preferredStyle: UIAlertControllerStyle.alert)
             

@@ -28,7 +28,7 @@ class MyDocument: UIDocument {
         if let userContent = contents as? Data {
             userText = NSString(bytes: (contents as AnyObject).bytes,
                                 length: userContent.count,
-                                encoding: String.Encoding.utf8.rawValue) as? String
+                                encoding: String.Encoding.utf8.rawValue) as String?
         }
     } 
 }
