@@ -35,7 +35,7 @@ let DistC = 0.0548954278262
     var P1 = numpy.array([xA, yA, zA])
     var P2 = numpy.array([xB, yB, zB])
     var P3 = numpy.array([xC, yC, zC])
-    
+
     #from wikipedia
     #transform to get circle 1 at origin
     #transform to get circle 2 on x axis
