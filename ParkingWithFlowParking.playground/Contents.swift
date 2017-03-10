@@ -40,6 +40,12 @@ var P1 = [xA, yA, zA]
 var P2 = [xB, yB, zB]
 var P3 = [xC, yC, zC]
 
+
+//numpy.linalg.nrom
+func norm (vector: [Double]) -> Double {
+    return sqrt(vector.map{$0 * $0}.reduce(0, +))
+}
+
 //from wikipedia
 //transform to get circle 1 at origin
 //transform to get circle 2 on x axis
