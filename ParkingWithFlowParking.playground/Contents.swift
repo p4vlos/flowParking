@@ -69,6 +69,19 @@ func multiply (vector: [Double], number: Double) -> [Double]{
 //from wikipedia
 //transform to get circle 1 at origin
 //transform to get circle 2 on x axis
+//<<<<<<< Updated upstream
+//=======
+//
+//var sub21 = zip(P2, P1).map{$0.0 - $0.1}
+//
+//
+//// To divde 2 vectors do this
+//let vector1 = [1,2,3,4]
+//let vector2 = [2,3,4,5]
+//var vectorDivision = zip(vector1, vector2).map { $0 / $1 }
+//print(vectorDivision)
+//
+//>>>>>>> Stashed changes
 
 var sub21 = substract(vector1: P2, vector2: P1)
 var sub31 = substract(vector1: P3, vector2: P1)
