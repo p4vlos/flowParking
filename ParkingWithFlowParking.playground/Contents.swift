@@ -47,7 +47,7 @@ class experiment {
     }
 }
 
-var exp1 = experiment(beaconA: beacon9, beaconB: beacon13, beaconC: beacon12, distA: 5.5153551314495, distB: 2.2193048912653, distC: 3.9154967493579)
+var exp1 = experiment(beaconA: beacon9, beaconB: beacon13, beaconC: beacon12, distA: 10.5153551314495, distB: 11.2193048912653, distC: 12.9154967493579)
 var exp2 = experiment(beaconA: beacon12, beaconB: beacon9, beaconC: beacon13, distA: 10.4816766826863, distB: 11.1363200558594, distC: 12.2279276116553)
 var exp3 = experiment(beaconA: beacon12, beaconB: beacon9, beaconC: beacon13, distA: 10.3778896331696, distB: 10.5585057597899, distC: 12.0471000505979)
 var exp4 = experiment(beaconA: beacon9, beaconB: beacon12, beaconC: beacon13, distA: 9.902686362184 , distB: 10.9669775191951, distC: 10.9788625010092)
