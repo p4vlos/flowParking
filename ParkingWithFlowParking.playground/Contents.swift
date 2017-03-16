@@ -19,6 +19,14 @@ let beacon11 = [51.296685, 1.065357]
 let beacon12 = [51.296592, 1.065457]
 let beacon13 = [51.296497, 1.065561]
 
+//Python example
+let beaconA = [37.418436, -121.963477]
+let beaconB = [37.417243, -121.961889]
+let beaconC = [37.418692, -121.960194]
+
+
+
+
 class experiment {
     
     var beaconA: [Double]
@@ -39,7 +47,7 @@ class experiment {
     }
 }
 
-var exp1 = experiment(beaconA: beacon9, beaconB: beacon13, beaconC: beacon12, distA: 10.5153551314495, distB: 11.2193048912653, distC: 12.9154967493579)
+var exp1 = experiment(beaconA: beacon9, beaconB: beacon13, beaconC: beacon12, distA: 5.5153551314495, distB: 2.2193048912653, distC: 3.9154967493579)
 var exp2 = experiment(beaconA: beacon12, beaconB: beacon9, beaconC: beacon13, distA: 10.4816766826863, distB: 11.1363200558594, distC: 12.2279276116553)
 var exp3 = experiment(beaconA: beacon12, beaconB: beacon9, beaconC: beacon13, distA: 10.3778896331696, distB: 10.5585057597899, distC: 12.0471000505979)
 var exp4 = experiment(beaconA: beacon9, beaconB: beacon12, beaconC: beacon13, distA: 9.902686362184 , distB: 10.9669775191951, distC: 10.9788625010092)
@@ -47,11 +55,12 @@ var exp5 = experiment(beaconA: beacon9, beaconB: beacon13, beaconC: beacon12, di
 var exp6 = experiment(beaconA: beacon3, beaconB: beacon2, beaconC: beacon7, distA:  5.05463879495952 , distB: 13.1271327170505 , distC: 14.6779926762207)
 var exp7 = experiment(beaconA: beacon2, beaconB: beacon3, beaconC: beacon5, distA: 7.74456526537434, distB: 8.65774424211706, distC: 16.6810054382124)
 var exp8 = experiment(beaconA: beacon2 , beaconB: beacon5, beaconC: beacon6, distA: 7.8711711795281, distB: 11.870836583525, distC: 14.6779927621778)
-//var exp9 = experiment(beaconA: , beaconB: , beaconC: , distA: , distB: , distC:)
+//Python example
+var exp9 = experiment(beaconA: beaconA, beaconB: beaconB, beaconC: beaconC, distA: 0.265710701754, distB: 0.234592423446, distC: 0.0548954278262)
 //var exp10 = experiment(beaconA: , beaconB: , beaconC: , distA: , distB: , distC:)
 
 
-var expList = [exp1, exp2, exp3, exp4, exp5, exp6, exp7, exp8]
+var expList = [exp1, exp2, exp3, exp4, exp5, exp6, exp7, exp8, exp9]
 
 func trilateration (listExp: [experiment]) -> [(Double, Double)] {
     
@@ -71,6 +80,9 @@ func trilateration (listExp: [experiment]) -> [(Double, Double)] {
         return aux
     }
     
+func add (vector1: [Double], vector2: [Double]) -> [Double]{
+    return zip(vector1, vector2).map{$0 + $1}
+}
     func substract (vector1: [Double], vector2: [Double]) -> [Double]{
         return zip(vector1, vector2).map{$0 - $1}
     }
@@ -158,7 +170,10 @@ func trilateration (listExp: [experiment]) -> [(Double, Double)] {
         let z = sqrt(pow(DistA,2) - pow(x,2) - pow(y,2))
         //
         //    #triPt is an array with ECEF x,y,z of trilateration point
-        let triPt = P1 + multiply(vector: ex, number: x) + multiply(vector: ey, number: y) + multiply(vector: ez, number: z)
+
+        let addAux = add(vector1: P1, vector2: (multiply(vector: ex, number: x)))
+        let addAux2 = add(vector1: (multiply(vector: ey, number: y)), vector2: (multiply(vector: ez, number: z)))
+        var triPt = add(vector1: addAux, vector2: addAux2)
         //
         //    #convert back to lat/long from ECEF
         //    #convert to degrees
@@ -173,5 +188,6 @@ func trilateration (listExp: [experiment]) -> [(Double, Double)] {
 }
 
 var results = trilateration(listExp: expList)
+
 
 
