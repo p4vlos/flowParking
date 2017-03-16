@@ -19,6 +19,8 @@ let beacon11 = [51.296685, 1.065357]
 let beacon12 = [51.296592, 1.065457]
 let beacon13 = [51.296497, 1.065561]
 
+
+
 class experiment {
     
     var beaconA: [Double]
