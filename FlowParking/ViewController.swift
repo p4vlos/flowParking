@@ -87,25 +87,21 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         print(total)
         
         
+        
         if beacons.count > 0 {
             for i in 0..<beacons.count{
-                guard beacons[i].rssi == 0 else {
-                    
-                    message += "---- Time: \(time) Beacon(\(i)) Minor: \(beacons[i].minor) RSSI: \(beacons[i].rssi) Accuracy: \(beacons[i].accuracy) "
-                    updateDistance(beacons[i].proximity)
-                    
-                    print("found more than one beacon")
-                    //minor: 4608
-                    //print(beacons[i].minor)
-                    //printing all info for the beacon
-                    self.minorLbl.text = "Beacon's Minor: \(beacons[0].minor)"
-                    self.accuracyLbl.text = "Beacon's Accuracy: \(beacons[0].accuracy)"
-                    self.rssiLbl.text = "Beacon's RSSI: \(beacons[0].rssi)"
-                    
-                    //var results = trilateration(listExp: )
-                    
-                    return
-                }
+                message += "---- Time: \(time) Beacon(\(i)) Minor: \(beacons[i].minor) RSSI: \(beacons[i].rssi) Accuracy: \(beacons[i].accuracy) "
+                updateDistance(beacons[i].proximity)
+                
+                print("found more than one beacon")
+                //minor: 4608
+                //print(beacons[i].minor)
+                //printing all info for the beacon
+                self.minorLbl.text = "Beacon's Minor: \(beacons[0].minor)"
+                self.accuracyLbl.text = "Beacon's Accuracy: \(beacons[0].accuracy)"
+                self.rssiLbl.text = "Beacon's RSSI: \(beacons[0].rssi)"
+                
+                //var beaconA[0] = beacons[1].minor[0]
             }
         } else {
             // No beacons around Alert
