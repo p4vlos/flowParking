@@ -9,14 +9,17 @@
 import UIKit
 import CoreLocation
 import Social
+import MapKit
 
 class ViewController: UIViewController, CLLocationManagerDelegate {
 
+
+    @IBOutlet weak var mapView: MKMapView!
     
-    @IBOutlet weak var distanceLbl: UILabel!
-    @IBOutlet weak var minorLbl: UILabel!
-    @IBOutlet weak var rssiLbl: UILabel!
-    @IBOutlet weak var accuracyLbl: UILabel!
+//    @IBOutlet weak var distanceLbl: UILabel!
+//    @IBOutlet weak var minorLbl: UILabel!
+//    @IBOutlet weak var rssiLbl: UILabel!
+//    @IBOutlet weak var accuracyLbl: UILabel!
     @IBAction func share(_ sender: UIButton) {
         
         let sheet = UIActivityViewController(
@@ -51,10 +54,21 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         locationManager.delegate = self
         locationManager.requestAlwaysAuthorization()
         
-        view.backgroundColor = UIColor.gray
+        
         print("did load")
         
+        let latitude = 51.296624
+        let longitude = 1.064893
         
+        
+        mapView.mapType = .satellite
+        
+        let location = CLLocationCoordinate2D(
+            latitude: latitude, longitude: longitude)
+        let span = MKCoordinateSpanMake(0.05, 0.05)
+        let region = MKCoordinateRegionMake(location, span)
+        
+        mapView.setRegion(region, animated: true)
         
         
     }
@@ -109,7 +123,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         
         var triCount = 0
         
-        
         if beacons.count > 0 {
             
             print("Found more than one beacon")
@@ -151,9 +164,24 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
                         
                             let result = data.trilateration()
                             print(result)
+                            
+                            
                             message += "Trilateration position: \(result) \n"
                             let locValue:CLLocationCoordinate2D = manager.location!.coordinate
                             message += "CoreLoc position: \(locValue.latitude) \(locValue.longitude) \n"
+                            
+                            
+                            // ------ MAP ------
+           
+                            // add mark
+                            let point = MKPointAnnotation()
+                            point.coordinate.latitude = result.0
+                            point.coordinate.longitude = result.1
+                            mapView.addAnnotation(point)
+                            
+                            
+                            // ------ MAP ------
+                            
                             triCount += 1
                         case 3:
                             minor1 = beacons[i].minor as Int
@@ -165,9 +193,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
                 }
                
                 //printing all info for the beacon
-                self.minorLbl.text = "Beacon's Minor: \(beacons[0].minor)"
-                self.accuracyLbl.text = "Beacon's Accuracy: \(beacons[0].accuracy)"
-                self.rssiLbl.text = "Beacon's RSSI: \(beacons[0].rssi)"
+//                self.minorLbl.text = "Beacon's Minor: \(beacons[0].minor)"
+//                self.accuracyLbl.text = "Beacon's Accuracy: \(beacons[0].accuracy)"
+//                self.rssiLbl.text = "Beacon's RSSI: \(beacons[0].rssi)"
                 
                 //var beaconA[0] = beacons[1].minor[0]
             }
@@ -189,23 +217,23 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         UIView.animate(withDuration: 0.3) {
             switch distance {
             case .unknown:
-                self.view.backgroundColor = UIColor.gray
-                self.distanceLbl.text = "Proximity Unknonw"
+                //self.view.backgroundColor = UIColor.gray
+                //self.distanceLbl.text = "Proximity Unknonw"
                 print("distance Unknown")
                 self.message += "Distance: unknown \n"
             case .far:
-                self.view.backgroundColor = UIColor.blue
-                self.distanceLbl.text = "Proximity Far"
+                //self.view.backgroundColor = UIColor.blue
+                //self.distanceLbl.text = "Proximity Far"
                 print("distance Far")
                 self.message += "Distance: far \n"
             case .near:
-                self.view.backgroundColor = UIColor.orange
-                self.distanceLbl.text = "Proximity Near"
+                //self.view.backgroundColor = UIColor.orange
+                //self.distanceLbl.text = "Proximity Near"
                 print("distance Near")
                 self.message += "Distance: near \n"
             case .immediate:
-                self.view.backgroundColor = UIColor.red
-                self.distanceLbl.text = "Proximity Immediate"
+                //self.view.backgroundColor = UIColor.red
+                //self.distanceLbl.text = "Proximity Immediate"
                 print("distance Immediate")
                 self.message += "Distance: immediate \n"
             }
