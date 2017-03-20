@@ -63,6 +63,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         if status == .authorizedAlways {
             print("status authorised")
+            
             if CLLocationManager.isMonitoringAvailable(for: CLBeaconRegion.self) {
                 print("is monitoring")
                 if CLLocationManager.isRangingAvailable() {
@@ -151,6 +152,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
                             let result = data.trilateration()
                             print(result)
                             message += "Trilateration position: \(result) \n"
+                            let locValue:CLLocationCoordinate2D = manager.location!.coordinate
+                            message += "CoreLoc position: \(locValue.latitude) \(locValue.longitude) \n"
                             triCount += 1
                         case 3:
                             minor1 = beacons[i].minor as Int
