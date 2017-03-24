@@ -131,7 +131,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
                 
                 message += "---- Time: \(time) Beacon(\(i)) Minor: \(beacons[i].minor) RSSI: \(beacons[i].rssi) Accuracy: \(beacons[i].accuracy) "
                 updateDistance(beacons[i].proximity)
-                let minor = beacons[i].minor as Int
+                let minor = beacons[i].minor as! Int
                 if let lat = beaconsPos[minor]?[0]{
                     print("Latitude of beacon \(minor): \(lat)")
                 }
@@ -142,11 +142,11 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
                 if (beacons[i].rssi != 0){
                     switch triCount{
                         case 0:
-                            minor1 = beacons[i].minor as Int
+                            minor1 = beacons[i].minor as! Int
                             accuracy1 = beacons[i].accuracy as Double
                             triCount += 1
                         case 1:
-                            minor2 = beacons[i].minor as Int
+                            minor2 = beacons[i].minor as! Int
                             accuracy2 = beacons[i].accuracy as Double
                             triCount += 1
                         case 2:
@@ -156,7 +156,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
                             let lat2 = beaconsPos[minor2]![0]
                             let lon2 = beaconsPos[minor2]![1]
                             
-                            let minor3 = beacons[i].minor as Int
+                            let minor3 = beacons[i].minor as! Int
                             let lat3 = beaconsPos[minor3]![0]
                             let lon3 = beaconsPos[minor3]![1]
                             
@@ -184,7 +184,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
                             
                             triCount += 1
                         case 3:
-                            minor1 = beacons[i].minor as Int
+                            minor1 = beacons[i].minor as! Int
                             accuracy1 = beacons[i].accuracy
                             triCount = 1
                         default:
