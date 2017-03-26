@@ -1,16 +1,138 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
-    <device id="retina3_5" orientation="portrait">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12118" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="wZc-k9-ZlN">
+    <device id="retina5_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
+        <scene sceneID="jOR-pI-aZh">
+            <objects>
+                <viewController id="wZc-k9-ZlN" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="O7q-pc-S8w"/>
+                        <viewControllerLayoutGuide type="bottom" id="kNd-Oa-2mc"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="wFk-pp-rGB">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="13M-Bs-Syg">
+                                <rect key="frame" x="131" y="628" width="152" height="58"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="38"/>
+                                <state key="normal" title="Continue">
+                                    <color key="titleColor" red="0.13725490196078433" green="0.61176470588235299" blue="0.43529411764705883" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <segue destination="UsM-X9-zbB" kind="show" id="V1s-e9-bH3"/>
+                                </connections>
+                            </button>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Parking-With-Beacons" translatesAutoresizingMaskIntoConstraints="NO" id="Wqj-os-2Bk">
+                                <rect key="frame" x="8" y="20" width="398" height="102"/>
+                            </imageView>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="1Ib-GE-e1e">
+                                <rect key="frame" x="20" y="130" width="374" height="490"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <string key="text">Parking With Beacons is an iOS Library that helps organisations that needs to have navigation system in underground Parking areas where is no GPS signal. To make this library work we need the UUID of the beacons the exact position of each beacon with their major and minor to specify where is each beacon so we can use our trilateration algorithm to return the user's location.</string>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="23"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="13M-Bs-Syg" firstAttribute="centerX" secondItem="wFk-pp-rGB" secondAttribute="centerX" id="3tG-xO-Ai1"/>
+                            <constraint firstItem="1Ib-GE-e1e" firstAttribute="leading" secondItem="wFk-pp-rGB" secondAttribute="leadingMargin" id="4FH-qL-vgV"/>
+                            <constraint firstItem="kNd-Oa-2mc" firstAttribute="top" secondItem="13M-Bs-Syg" secondAttribute="bottom" constant="50" id="6Ft-hp-aaQ"/>
+                            <constraint firstItem="1Ib-GE-e1e" firstAttribute="trailing" secondItem="wFk-pp-rGB" secondAttribute="trailingMargin" id="IWs-oi-C39"/>
+                            <constraint firstItem="Wqj-os-2Bk" firstAttribute="leading" secondItem="wFk-pp-rGB" secondAttribute="leading" constant="8" id="Kn7-eD-bF9"/>
+                            <constraint firstItem="1Ib-GE-e1e" firstAttribute="top" secondItem="Wqj-os-2Bk" secondAttribute="bottom" constant="8" id="ZUh-zu-ThB"/>
+                            <constraint firstAttribute="trailing" secondItem="Wqj-os-2Bk" secondAttribute="trailing" constant="8" id="blK-zH-DKJ"/>
+                            <constraint firstItem="13M-Bs-Syg" firstAttribute="top" secondItem="1Ib-GE-e1e" secondAttribute="bottom" constant="8" id="h2i-i8-AuD"/>
+                            <constraint firstItem="Wqj-os-2Bk" firstAttribute="top" secondItem="O7q-pc-S8w" secondAttribute="bottom" id="tUX-Kj-ft5"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="7K2-bU-eob" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-2542.0289855072465" y="159.78260869565219"/>
+        </scene>
+        <!--Recent Data Controller-->
+        <scene sceneID="5UR-Wr-vqt">
+            <objects>
+                <viewController id="EgQ-KE-p3e" customClass="RecentDataController" customModule="FlowParking" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="vCC-7p-kmT"/>
+                        <viewControllerLayoutGuide type="bottom" id="9lC-54-33Q"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="pjB-ub-EYG">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Cao-Hx-nI4">
+                                <rect key="frame" x="20" y="20" width="374" height="606"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <mutableString key="text">Maecenas sed diam eget risus varius blandit sit amet non magna. Donec ullamcorper nulla non metus auctor fringilla. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Nulla vitae elit libero, a pharetra augue.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Cras mattis consectetur purus sit amet fermentum.Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nullam quis risus eget urna mollis ornare vel eu leo. Curabitur blandit tempus porttitor. Maecenas faucibus mollis interdum. Integer posuere erat a ante venenatis dapibus posuere velit aliquet.Etiam porta sem malesuada magna mollis euismod. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Nullam id dolor id nibh ultricies vehicula ut id elit. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</mutableString>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="21"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xgj-Cs-GzY">
+                                <rect key="frame" x="20" y="634" width="40" height="45"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="40" id="FvJ-h2-aUy"/>
+                                    <constraint firstAttribute="height" constant="45" id="yNr-Sn-CLd"/>
+                                </constraints>
+                                <color key="tintColor" red="0.13725490196078433" green="0.61176470588235299" blue="0.43529411764705883" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <state key="normal" image="share">
+                                    <color key="titleShadowColor" red="0.13725490200000001" green="0.61176470589999998" blue="0.43529411759999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="shareBtnPressed:" destination="EgQ-KE-p3e" eventType="touchUpInside" id="aAq-Rf-vcR"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Cao-Hx-nI4" firstAttribute="top" secondItem="vCC-7p-kmT" secondAttribute="bottom" id="1ef-1Z-GHj"/>
+                            <constraint firstItem="Xgj-Cs-GzY" firstAttribute="top" secondItem="Cao-Hx-nI4" secondAttribute="bottom" constant="8" id="JrW-cL-aIg"/>
+                            <constraint firstItem="Xgj-Cs-GzY" firstAttribute="leading" secondItem="pjB-ub-EYG" secondAttribute="leadingMargin" id="Zt9-0b-MA0"/>
+                            <constraint firstItem="Cao-Hx-nI4" firstAttribute="trailing" secondItem="pjB-ub-EYG" secondAttribute="trailingMargin" id="exO-LO-DIu"/>
+                            <constraint firstItem="Cao-Hx-nI4" firstAttribute="leading" secondItem="pjB-ub-EYG" secondAttribute="leadingMargin" id="kZS-UR-SgD"/>
+                            <constraint firstItem="9lC-54-33Q" firstAttribute="top" secondItem="Xgj-Cs-GzY" secondAttribute="bottom" constant="8" id="q7Z-va-RwJ"/>
+                        </constraints>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="" systemItem="recents" id="c3C-bW-GxM"/>
+                    <connections>
+                        <outlet property="dataTxtView" destination="Cao-Hx-nI4" id="suG-Mg-2Iv"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="eIN-Fy-mXg" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-772.46376811594212" y="485.86956521739137"/>
+        </scene>
+        <!--Tab Bar Controller-->
+        <scene sceneID="vIk-Pe-Nag">
+            <objects>
+                <tabBarController id="UsM-X9-zbB" sceneMemberID="viewController">
+                    <tabBar key="tabBar" contentMode="scaleToFill" id="At3-cU-mTk">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="viewControllers" id="a4Z-Hq-7h3"/>
+                        <segue destination="EgQ-KE-p3e" kind="relationship" relationship="viewControllers" id="Br6-nU-BuB"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="U0l-Ff-XfP" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1689" y="160"/>
+        </scene>
+        <!--Map-->
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="FlowParking" customModuleProvider="target" sceneMemberID="viewController">
@@ -19,44 +141,34 @@
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hnW-Ua-Hsi">
-                                <rect key="frame" x="114.5" y="390" width="91" height="65"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="91" id="82e-Lx-b2F"/>
-                                    <constraint firstAttribute="height" constant="65" id="CGA-6f-Bqr"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="35"/>
-                                <state key="normal" title="Share">
-                                    <color key="titleColor" red="0.094123281538486481" green="0.089057169854640961" blue="0.47492790222167969" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                </state>
-                                <connections>
-                                    <action selector="share:" destination="BYZ-38-t0r" eventType="touchUpInside" id="swM-vL-qh2"/>
-                                </connections>
-                            </button>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="Emf-yJ-BgJ">
-                                <rect key="frame" x="-4" y="20" width="328" height="370"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="687"/>
                             </mapView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstAttribute="leadingMargin" secondItem="Emf-yJ-BgJ" secondAttribute="leading" constant="20" id="9zY-Za-gJQ"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="Emf-yJ-BgJ" secondAttribute="trailing" constant="-20" id="Gu0-bv-79v"/>
-                            <constraint firstItem="Emf-yJ-BgJ" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="Taw-k0-4Xo"/>
-                            <constraint firstItem="hnW-Ua-Hsi" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Tjn-Jm-tcQ"/>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="Emf-yJ-BgJ" secondAttribute="bottom" constant="90" id="WM2-9n-JVL"/>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="hnW-Ua-Hsi" secondAttribute="bottom" constant="25" id="bRr-ep-hIM"/>
+                            <constraint firstItem="Emf-yJ-BgJ" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="LuV-gi-Cj8"/>
+                            <constraint firstAttribute="trailing" secondItem="Emf-yJ-BgJ" secondAttribute="trailing" id="RB2-Dl-ZaG"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="Emf-yJ-BgJ" secondAttribute="bottom" id="Yri-Ae-Fqg"/>
+                            <constraint firstItem="Emf-yJ-BgJ" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="Z4f-4E-T8c"/>
                         </constraints>
                     </view>
+                    <tabBarItem key="tabBarItem" title="Map" image="mapIcon" id="xog-tl-iPX"/>
                     <connections>
                         <outlet property="mapView" destination="Emf-yJ-BgJ" id="25g-Hy-xxV"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="80.799999999999997" y="91.304347826086968"/>
+            <point key="canvasLocation" x="-772.46376811594212" y="-181.79347826086959"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="Parking-With-Beacons" width="669" height="102"/>
+        <image name="mapIcon" width="17" height="24"/>
+        <image name="share" width="524" height="584"/>
+    </resources>
 </document>

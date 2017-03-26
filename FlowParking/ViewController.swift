@@ -11,25 +11,29 @@ import CoreLocation
 import Social
 import MapKit
 
-class ViewController: UIViewController, CLLocationManagerDelegate {
+class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
 
 
     @IBOutlet weak var mapView: MKMapView!
+    var mapHasCenteredOnce = false
     
 //    @IBOutlet weak var distanceLbl: UILabel!
 //    @IBOutlet weak var minorLbl: UILabel!
 //    @IBOutlet weak var rssiLbl: UILabel!
 //    @IBOutlet weak var accuracyLbl: UILabel!
-    @IBAction func share(_ sender: UIButton) {
-        
-        let sheet = UIActivityViewController(
-            activityItems: [message],
-            applicationActivities: nil)
-        self.present(sheet, animated: true, completion: nil)
-    }
+//    Previous share button
+//    @IBAction func share(_ sender: UIButton) {
+//        
+//        let sheet = UIActivityViewController(
+//            activityItems: [ViewController.message],
+//            applicationActivities: nil)
+//        self.present(sheet, animated: true, completion: nil)
+//    }
     
-    var message: String = ""
+    static var message: String = ""
     
+    let latitude = 51.296624
+    let longitude = 1.064893
     var locationManager: CLLocationManager!
     
     var beaconsPos: [Int: [Double]] = [42397: [51.296624, 1.064893],
@@ -57,11 +61,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         
         print("did load")
         
-        let latitude = 51.296624
-        let longitude = 1.064893
-        
-        
-        mapView.mapType = .satellite
+        mapView.mapType = .standard
         
         let location = CLLocationCoordinate2D(
             latitude: latitude, longitude: longitude)
@@ -69,8 +69,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         let region = MKCoordinateRegionMake(location, span)
         
         mapView.setRegion(region, animated: true)
-        
-        
     }
     
     
@@ -86,6 +84,21 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
                 }
             }
         }
+    }
+    
+    //Center location on the Map
+    func centerMapOnLocation(location: CLLocation) {
+        let coordinateRegion = MKCoordinateRegionMakeWithDistance(location.coordinate, 20, 20)
+        
+        mapView.setRegion(coordinateRegion, animated: true)
+    }
+    
+    func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
+        let location = CLLocation(latitude: latitude, longitude: longitude)
+            if !mapHasCenteredOnce {
+                centerMapOnLocation(location: location)
+                mapHasCenteredOnce = true
+            }
     }
     
     func startScanning() {
@@ -129,7 +142,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
             
             for i in 0..<beacons.count{
                 
-                message += "---- Time: \(time) Beacon(\(i)) Minor: \(beacons[i].minor) RSSI: \(beacons[i].rssi) Accuracy: \(beacons[i].accuracy) "
+                ViewController.message += "---- Time: \(time) Beacon(\(i)) Minor: \(beacons[i].minor) RSSI: \(beacons[i].rssi) Accuracy: \(beacons[i].accuracy) "
                 updateDistance(beacons[i].proximity)
                 let minor = beacons[i].minor as! Int
                 if let lat = beaconsPos[minor]?[0]{
@@ -166,9 +179,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
                             print(result)
                             
                             
-                            message += "Trilateration position: \(result) \n"
+                            ViewController.message += "Trilateration position: \(result) \n"
                             let locValue:CLLocationCoordinate2D = manager.location!.coordinate
-                            message += "CoreLoc position: \(locValue.latitude) \(locValue.longitude) \n"
+                            ViewController.message += "CoreLoc position: \(locValue.latitude) \(locValue.longitude) \n"
                             
                             
                             // ------ MAP ------
@@ -184,7 +197,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
                             
                             triCount += 1
                         case 3:
-                            minor1 = beacons[i].minor as! Int
+                            minor1 = Int(beacons[i].minor)
                             accuracy1 = beacons[i].accuracy
                             triCount = 1
                         default:
@@ -220,22 +233,22 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
                 //self.view.backgroundColor = UIColor.gray
                 //self.distanceLbl.text = "Proximity Unknonw"
                 print("distance Unknown")
-                self.message += "Distance: unknown \n"
+                ViewController.message += "Distance: unknown \n"
             case .far:
                 //self.view.backgroundColor = UIColor.blue
                 //self.distanceLbl.text = "Proximity Far"
                 print("distance Far")
-                self.message += "Distance: far \n"
+                ViewController.message += "Distance: far \n"
             case .near:
                 //self.view.backgroundColor = UIColor.orange
                 //self.distanceLbl.text = "Proximity Near"
                 print("distance Near")
-                self.message += "Distance: near \n"
+                ViewController.message += "Distance: near \n"
             case .immediate:
                 //self.view.backgroundColor = UIColor.red
                 //self.distanceLbl.text = "Proximity Immediate"
                 print("distance Immediate")
-                self.message += "Distance: immediate \n"
+                ViewController.message += "Distance: immediate \n"
             }
         }
     }
