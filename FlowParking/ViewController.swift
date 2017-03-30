@@ -10,11 +10,14 @@ import UIKit
 import CoreLocation
 import Social
 import MapKit
-
-class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
+//, MKMapViewDelegate
+class ViewController: UIViewController, CLLocationManagerDelegate {
 
 
     @IBOutlet weak var mapView: MKMapView!
+    
+    let parkingSpaces = ParkingSpace.getParkingSpaces()
+    
     var mapHasCenteredOnce = false
     
 //    @IBOutlet weak var distanceLbl: UILabel!
@@ -51,6 +54,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
                                        25488: [51.296497, 1.065561]]
     
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -58,47 +62,55 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
         locationManager.delegate = self
         locationManager.requestAlwaysAuthorization()
         
-        
+        // setting map view delegate with controller
+        self.mapView.delegate = self
+
         print("did load")
         
-        mapView.mapType = .standard
+        mapView.mapType = .satellite
         
-        let location = CLLocationCoordinate2D(
-            latitude: latitude, longitude: longitude)
-        let span = MKCoordinateSpanMake(0.05, 0.05)
-        let region = MKCoordinateRegionMake(location, span)
-        
+       // let location = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+        let span = MKCoordinateSpanMake(0.0015, 0.0015)
+       // let region = MKCoordinateRegionMake(location, span)
+        let region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: latitude, longitude: longitude), span: span)
         mapView.setRegion(region, animated: true)
+        
+        addPolygon()
+        
     }
     
+    //Draw on tha map
+    func addPolygon() {
+        mapView?.delegate = self
+        var locations = parkingSpaces.map { $0.coordinate }
+        let polygon = MKPolygon(coordinates: &locations, count: locations.count)
+        mapView?.add(polygon)
+    }
     
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-        if status == .authorizedAlways {
+        if status == .authorizedWhenInUse {
             print("status authorised")
             
-            if CLLocationManager.isMonitoringAvailable(for: CLBeaconRegion.self) {
-                print("is monitoring")
-                if CLLocationManager.isRangingAvailable() {
-                    print("scanning")
-                    startScanning()
-                }
-            }
+            //Beacon's code
+//            if CLLocationManager.isMonitoringAvailable(for: CLBeaconRegion.self) {
+//                print("is monitoring")
+//                if CLLocationManager.isRangingAvailable() {
+//                    print("scanning")
+//                    startScanning()
+//                }
+//            }
         }
     }
     
-    //Center location on the Map
-    func centerMapOnLocation(location: CLLocation) {
-        let coordinateRegion = MKCoordinateRegionMakeWithDistance(location.coordinate, 20, 20)
-        
-        mapView.setRegion(coordinateRegion, animated: true)
-    }
+
     
-    func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
-        let location = CLLocation(latitude: latitude, longitude: longitude)
-            if !mapHasCenteredOnce {
-                centerMapOnLocation(location: location)
-                mapHasCenteredOnce = true
-            }
+    func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
+        let location = locations.last as! CLLocation
+        
+        let center = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
+        let region = MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: 0.0001, longitudeDelta: 0.0001))
+        
+        self.mapView.setRegion(region, animated: true)
     }
     
     func startScanning() {
@@ -115,6 +127,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
         
     }
     
+    
+    
+    /* Beacon's code
     func locationManager(_ manager: CLLocationManager, didRangeBeacons beacons: [CLBeacon], in region: CLBeaconRegion) {
         
         //print(manager.desiredAccuracy)
@@ -252,5 +267,66 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
             }
         }
     }
+    
+    */
 }
 
+private extension MKPolyline {
+    convenience init(coordinates coords: Array<CLLocationCoordinate2D>) {
+        let unsafeCoordinates = UnsafeMutablePointer<CLLocationCoordinate2D>.allocate(capacity: coords.count)
+        unsafeCoordinates.initialize(from: coords)
+        self.init(coordinates: unsafeCoordinates, count: coords.count)
+        unsafeCoordinates.deallocate(capacity: coords.count)
+    }
+}
+
+//MKMapViewDelegate
+extension ViewController: MKMapViewDelegate {
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        if annotation is MKUserLocation {
+            return nil
+        }
+            
+        else {
+            let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "annotationView") ?? MKAnnotationView()
+            annotationView.image = UIImage(named: "place icon")
+            annotationView.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
+            annotationView.canShowCallout = true
+            return annotationView
+        }
+    }
+    
+    func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
+        if overlay is MKCircle {
+            let renderer = MKCircleRenderer(overlay: overlay)
+            renderer.fillColor = UIColor.black.withAlphaComponent(0.5)
+            renderer.strokeColor = UIColor.blue
+            renderer.lineWidth = 2
+            return renderer
+            
+        } else if overlay is MKPolyline {
+            let renderer = MKPolylineRenderer(overlay: overlay)
+            renderer.strokeColor = UIColor.orange
+            renderer.lineWidth = 3
+            return renderer
+            
+        } else if overlay is MKPolygon {
+            let renderer = MKPolygonRenderer(polygon: overlay as! MKPolygon)
+            renderer.fillColor = UIColor.black.withAlphaComponent(0.5)
+            renderer.strokeColor = UIColor.orange
+            renderer.lineWidth = 2
+            return renderer
+        }
+        
+        return MKOverlayRenderer()
+    }
+    
+    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+       // guard let annotation = view.annotation as? Place, let title = annotation.title else { return }
+        
+       // let alertController = UIAlertController(title: "Welcome to \(title)", message: "You've selected \(title)", preferredStyle: .alert)
+        //let cancelAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+       // alertController.addAction(cancelAction)
+        //present(alertController, animated: true, completion: nil)
+    }
+}
