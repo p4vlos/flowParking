@@ -53,8 +53,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
                                        23240: [51.296592, 1.065457],
                                        25488: [51.296497, 1.065561]]
     
-    
-    
+        
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -82,8 +81,10 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     //Draw on tha map
     func addPolygon() {
         mapView?.delegate = self
-        var locations = parkingSpaces.map { $0.coordinate }
+        var locations = parkingSpaces[0].map { $0.coordinate }
         let polygon = MKPolygon(coordinates: &locations, count: locations.count)
+        
+        
         mapView?.add(polygon)
     }
     
