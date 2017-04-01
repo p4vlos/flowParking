@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		11225B071E5498890036D6C9 /* MyDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11225B061E5498890036D6C9 /* MyDocument.swift */; };
-		115BCAF51E8B176D0079B914 /* ParkingSpaces.plist in Resources */ = {isa = PBXBuildFile; fileRef = 115BCAF41E8B176D0079B914 /* ParkingSpaces.plist */; };
 		115BCAF71E8B217B0079B914 /* ParkingSpaces.swift in Sources */ = {isa = PBXBuildFile; fileRef = 115BCAF61E8B217B0079B914 /* ParkingSpaces.swift */; };
 		989A76F81E7F51E200F5CAD7 /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 989A76F71E7F51E200F5CAD7 /* Data.swift */; };
 		D97DB7D71E326D6E008ABC9E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D97DB7D61E326D6E008ABC9E /* AppDelegate.swift */; };
@@ -19,9 +17,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		11225B061E5498890036D6C9 /* MyDocument.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyDocument.swift; sourceTree = "<group>"; };
 		11225B081E54BDF40036D6C9 /* FlowParking.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = FlowParking.entitlements; sourceTree = "<group>"; };
-		115BCAF41E8B176D0079B914 /* ParkingSpaces.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = ParkingSpaces.plist; sourceTree = "<group>"; };
 		115BCAF61E8B217B0079B914 /* ParkingSpaces.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParkingSpaces.swift; sourceTree = "<group>"; };
 		989A76F71E7F51E200F5CAD7 /* Data.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
 		D97DB7D31E326D6E008ABC9E /* FlowParking.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FlowParking.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -87,8 +83,6 @@
 				D97DB7DD1E326D6E008ABC9E /* Assets.xcassets */,
 				D97DB7DF1E326D6E008ABC9E /* LaunchScreen.storyboard */,
 				D97DB7E21E326D6E008ABC9E /* Info.plist */,
-				11225B061E5498890036D6C9 /* MyDocument.swift */,
-				115BCAF41E8B176D0079B914 /* ParkingSpaces.plist */,
 				115BCAF61E8B217B0079B914 /* ParkingSpaces.swift */,
 			);
 			path = FlowParking;
@@ -159,7 +153,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				115BCAF51E8B176D0079B914 /* ParkingSpaces.plist in Resources */,
 				D97DB7E11E326D6E008ABC9E /* LaunchScreen.storyboard in Resources */,
 				D97DB7DE1E326D6E008ABC9E /* Assets.xcassets in Resources */,
 				D97DB7DC1E326D6E008ABC9E /* Main.storyboard in Resources */,
@@ -175,7 +168,6 @@
 			files = (
 				D97DB7D91E326D6E008ABC9E /* ViewController.swift in Sources */,
 				D97DB7D71E326D6E008ABC9E /* AppDelegate.swift in Sources */,
-				11225B071E5498890036D6C9 /* MyDocument.swift in Sources */,
 				115BCAF71E8B217B0079B914 /* ParkingSpaces.swift in Sources */,
 				989A76F81E7F51E200F5CAD7 /* Data.swift in Sources */,
 			);
