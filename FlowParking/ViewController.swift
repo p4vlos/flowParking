@@ -16,7 +16,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 
     @IBOutlet weak var mapView: MKMapView!
     
-    let parkingSpaces = ParkingSpace.getParkingSpaces()
+    //let parkingSpaces = ParkingSpace.getParkingSpaces()
     
     var mapHasCenteredOnce = false
     
@@ -52,8 +52,25 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
                                        9483: [51.296685, 1.065357],
                                        23240: [51.296592, 1.065457],
                                        25488: [51.296497, 1.065561]]
+    var parkingSpacesList
+        = [
+            //First space
+            ParkingSpace(
+                c1: CLLocationCoordinate2D(latitude: 51.29665, longitude: 1.065107)
+                ,c2: CLLocationCoordinate2D(latitude: 51.296675, longitude: 1.065162)
+                ,c3: CLLocationCoordinate2D(latitude: 51.296659, longitude: 1.065182)
+                ,c4: CLLocationCoordinate2D(latitude: 51.296634, longitude: 1.065127)
+            )
+            //Second space
+            ,ParkingSpace(
+                c1: CLLocationCoordinate2D(latitude: 51.296658, longitude: 1.065181)
+                ,c2: CLLocationCoordinate2D(latitude: 51.296635, longitude: 1.065126)
+                ,c3: CLLocationCoordinate2D(latitude: 51.296616, longitude: 1.065144)
+                ,c4: CLLocationCoordinate2D(latitude: 51.296641, longitude: 1.065202)
+            )
+    ]
     
-        
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -74,19 +91,21 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         let region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: latitude, longitude: longitude), span: span)
         mapView.setRegion(region, animated: true)
         
-        addPolygon()
+        addPolygons()
         
     }
     
     //Draw on tha map
-    func addPolygon() {
+    
+    func addPolygons() {
         mapView?.delegate = self
-        var locations = parkingSpaces.map { $0.coordinate }
-        let polygon = MKPolygon(coordinates: &locations, count: locations.count)
         
-        
-        mapView?.add(polygon)
+        for space in parkingSpacesList {
+            let polygon = MKPolygon(coordinates: &space.coordinates, count: 4)
+            mapView?.add(polygon)
+        }
     }
+    
     
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         if status == .authorizedWhenInUse {
@@ -276,6 +295,7 @@ private extension MKPolyline {
     convenience init(coordinates coords: Array<CLLocationCoordinate2D>) {
         let unsafeCoordinates = UnsafeMutablePointer<CLLocationCoordinate2D>.allocate(capacity: coords.count)
         unsafeCoordinates.initialize(from: coords)
+        
         self.init(coordinates: unsafeCoordinates, count: coords.count)
         unsafeCoordinates.deallocate(capacity: coords.count)
     }
