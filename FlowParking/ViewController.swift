@@ -83,8 +83,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         mapView?.delegate = self
         var locations = parkingSpaces.map { $0.coordinate }
         let polygon = MKPolygon(coordinates: &locations, count: locations.count)
-        
-        
         mapView?.add(polygon)
     }
     
