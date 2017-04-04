@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		115BCAF71E8B217B0079B914 /* ParkingSpaces.swift in Sources */ = {isa = PBXBuildFile; fileRef = 115BCAF61E8B217B0079B914 /* ParkingSpaces.swift */; };
+		117E01F81E93D224006E5059 /* Route.swift in Sources */ = {isa = PBXBuildFile; fileRef = 117E01F71E93D224006E5059 /* Route.swift */; };
+		117E01FA1E93D4F6006E5059 /* Position.swift in Sources */ = {isa = PBXBuildFile; fileRef = 117E01F91E93D4F6006E5059 /* Position.swift */; };
 		989A76F81E7F51E200F5CAD7 /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 989A76F71E7F51E200F5CAD7 /* Data.swift */; };
 		D97DB7D71E326D6E008ABC9E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D97DB7D61E326D6E008ABC9E /* AppDelegate.swift */; };
 		D97DB7D91E326D6E008ABC9E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D97DB7D81E326D6E008ABC9E /* ViewController.swift */; };
@@ -19,6 +21,8 @@
 /* Begin PBXFileReference section */
 		11225B081E54BDF40036D6C9 /* FlowParking.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = FlowParking.entitlements; sourceTree = "<group>"; };
 		115BCAF61E8B217B0079B914 /* ParkingSpaces.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParkingSpaces.swift; sourceTree = "<group>"; };
+		117E01F71E93D224006E5059 /* Route.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Route.swift; sourceTree = "<group>"; };
+		117E01F91E93D4F6006E5059 /* Position.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Position.swift; sourceTree = "<group>"; };
 		989A76F71E7F51E200F5CAD7 /* Data.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
 		D97DB7D31E326D6E008ABC9E /* FlowParking.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FlowParking.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D97DB7D61E326D6E008ABC9E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -52,6 +56,7 @@
 			isa = PBXGroup;
 			children = (
 				989A76F71E7F51E200F5CAD7 /* Data.swift */,
+				117E01F91E93D4F6006E5059 /* Position.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -84,6 +89,7 @@
 				D97DB7DF1E326D6E008ABC9E /* LaunchScreen.storyboard */,
 				D97DB7E21E326D6E008ABC9E /* Info.plist */,
 				115BCAF61E8B217B0079B914 /* ParkingSpaces.swift */,
+				117E01F71E93D224006E5059 /* Route.swift */,
 			);
 			path = FlowParking;
 			sourceTree = "<group>";
@@ -168,7 +174,9 @@
 			files = (
 				D97DB7D91E326D6E008ABC9E /* ViewController.swift in Sources */,
 				D97DB7D71E326D6E008ABC9E /* AppDelegate.swift in Sources */,
+				117E01FA1E93D4F6006E5059 /* Position.swift in Sources */,
 				115BCAF71E8B217B0079B914 /* ParkingSpaces.swift in Sources */,
+				117E01F81E93D224006E5059 /* Route.swift in Sources */,
 				989A76F81E7F51E200F5CAD7 /* Data.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
