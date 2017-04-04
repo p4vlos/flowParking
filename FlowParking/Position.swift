@@ -275,17 +275,14 @@ class Position {
         Route(edge1: CLLocationCoordinate2D(latitude: 51.296597, longitude: 1.065309),
               edge2: CLLocationCoordinate2D(latitude: 51.296470, longitude: 1.065455),
               edge3: CLLocationCoordinate2D(latitude: 51.296386, longitude: 1.065269),
-              edge4: CLLocationCoordinate2D(latitude: 51.296536, longitude: 1.065091)
+              edge4: CLLocationCoordinate2D(latitude: 51.296536, longitude: 1.065091),
+              edge5: CLLocationCoordinate2D(latitude: 51.296519, longitude: 1.065053)
             ),
         Route(edge1: CLLocationCoordinate2D(latitude: 51.296543, longitude: 1.065025),
               edge2: CLLocationCoordinate2D(latitude: 51.296531, longitude: 1.064996),
               edge3: CLLocationCoordinate2D(latitude: 51.296478, longitude: 1.065052),
-              edge4: CLLocationCoordinate2D(latitude: 51.296495, longitude: 1.065078)
-            ),
-        Route(edge1: CLLocationCoordinate2D(latitude: 51.296531, longitude: 1.064996),
-              edge2: CLLocationCoordinate2D(latitude: 51.296543, longitude: 1.065025),
-              edge3: CLLocationCoordinate2D(latitude: 51.296495, longitude: 1.065078),
-              edge4: CLLocationCoordinate2D(latitude: 51.296478, longitude: 1.065052)
+              edge4: CLLocationCoordinate2D(latitude: 51.296495, longitude: 1.065078),
+              edge5: CLLocationCoordinate2D(latitude: 51.296543, longitude: 1.065025)
             )
     ]
     
