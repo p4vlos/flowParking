@@ -29,39 +29,28 @@
                                     <color key="titleColor" red="0.13725490196078433" green="0.61176470588235299" blue="0.43529411764705883" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <connections>
-                                    <segue destination="BYZ-38-t0r" kind="show" id="wCn-dY-qQM"/>
+                                    <segue destination="DuV-UC-Rez" kind="show" id="VaS-U0-2Rd"/>
                                 </connections>
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="FlowLogoDark" translatesAutoresizingMaskIntoConstraints="NO" id="Wqj-os-2Bk">
-                                <rect key="frame" x="8" y="20" width="398" height="200"/>
+                                <rect key="frame" x="8" y="36" width="398" height="200"/>
                             </imageView>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="1Ib-GE-e1e">
-                                <rect key="frame" x="20" y="228" width="374" height="392"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <string key="text">Parking With Beacons is an iOS Library that helps organisations that needs to have navigation system in underground Parking areas where is no GPS signal. To make this library work we need the UUID of the beacons the exact position of each beacon with their major and minor to specify where is each beacon so we can use our trilateration algorithm to return the user's location.</string>
-                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="23"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                            </textView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="13M-Bs-Syg" firstAttribute="centerX" secondItem="wFk-pp-rGB" secondAttribute="centerX" id="3tG-xO-Ai1"/>
-                            <constraint firstItem="1Ib-GE-e1e" firstAttribute="leading" secondItem="wFk-pp-rGB" secondAttribute="leadingMargin" id="4FH-qL-vgV"/>
                             <constraint firstItem="kNd-Oa-2mc" firstAttribute="top" secondItem="13M-Bs-Syg" secondAttribute="bottom" constant="50" id="6Ft-hp-aaQ"/>
-                            <constraint firstItem="1Ib-GE-e1e" firstAttribute="trailing" secondItem="wFk-pp-rGB" secondAttribute="trailingMargin" id="IWs-oi-C39"/>
                             <constraint firstItem="Wqj-os-2Bk" firstAttribute="leading" secondItem="wFk-pp-rGB" secondAttribute="leading" constant="8" id="Kn7-eD-bF9"/>
-                            <constraint firstItem="1Ib-GE-e1e" firstAttribute="top" secondItem="Wqj-os-2Bk" secondAttribute="bottom" constant="8" id="ZUh-zu-ThB"/>
                             <constraint firstAttribute="trailing" secondItem="Wqj-os-2Bk" secondAttribute="trailing" constant="8" id="blK-zH-DKJ"/>
-                            <constraint firstItem="13M-Bs-Syg" firstAttribute="top" secondItem="1Ib-GE-e1e" secondAttribute="bottom" constant="8" id="h2i-i8-AuD"/>
-                            <constraint firstItem="Wqj-os-2Bk" firstAttribute="top" secondItem="O7q-pc-S8w" secondAttribute="bottom" id="tUX-Kj-ft5"/>
+                            <constraint firstItem="Wqj-os-2Bk" firstAttribute="top" secondItem="O7q-pc-S8w" secondAttribute="bottom" constant="16" id="tUX-Kj-ft5"/>
                         </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7K2-bU-eob" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2110.144927536232" y="159.78260869565219"/>
+            <point key="canvasLocation" x="-3361" y="-259"/>
         </scene>
-        <!--Map-->
+        <!--Park me-->
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="FlowParking" customModuleProvider="target" sceneMemberID="viewController">
@@ -74,25 +63,77 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="Emf-yJ-BgJ">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                                <rect key="frame" x="0.0" y="20" width="414" height="667"/>
                             </mapView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="Emf-yJ-BgJ" secondAttribute="bottom" id="8By-Zd-27j"/>
                             <constraint firstItem="Emf-yJ-BgJ" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="LuV-gi-Cj8"/>
                             <constraint firstAttribute="trailing" secondItem="Emf-yJ-BgJ" secondAttribute="trailing" id="RB2-Dl-ZaG"/>
-                            <constraint firstItem="Emf-yJ-BgJ" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="Z4f-4E-T8c"/>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="Emf-yJ-BgJ" secondAttribute="bottom" id="aDa-k2-GKN"/>
+                            <constraint firstItem="Emf-yJ-BgJ" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="mdK-YI-SRe"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Map" image="mapIcon" id="xog-tl-iPX"/>
+                    <tabBarItem key="tabBarItem" title="Park me" image="mapIcon" id="xog-tl-iPX"/>
                     <connections>
                         <outlet property="mapView" destination="Emf-yJ-BgJ" id="25g-Hy-xxV"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1322" y="160"/>
+            <point key="canvasLocation" x="-1581.1594202898552" y="-421.46739130434787"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="1bO-cm-Zxz">
+            <objects>
+                <viewController id="Ao9-yg-bRd" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="tHW-Uv-UZx"/>
+                        <viewControllerLayoutGuide type="bottom" id="MaS-bO-z29"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="ckM-e2-I2i">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="1Ib-GE-e1e">
+                                <rect key="frame" x="20" y="36" width="374" height="651"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <string key="text">Parking With Beacons is an iOS Library that helps organisations that needs to have navigation system in underground Parking areas where is no GPS signal. To make this library work we need the UUID of the beacons the exact position of each beacon with their major and minor to specify where is each beacon so we can use our trilateration algorithm to return the user's location.</string>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="23"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="1Ib-GE-e1e" firstAttribute="top" secondItem="tHW-Uv-UZx" secondAttribute="bottom" constant="16" id="4XN-Yo-5vY"/>
+                            <constraint firstItem="1Ib-GE-e1e" firstAttribute="leading" secondItem="ckM-e2-I2i" secondAttribute="leadingMargin" id="JaP-dN-bNo"/>
+                            <constraint firstItem="MaS-bO-z29" firstAttribute="top" secondItem="1Ib-GE-e1e" secondAttribute="bottom" id="e8X-VG-9xe"/>
+                            <constraint firstItem="1Ib-GE-e1e" firstAttribute="trailing" secondItem="ckM-e2-I2i" secondAttribute="trailingMargin" id="uAy-Tg-CUi"/>
+                        </constraints>
+                    </view>
+                    <tabBarItem key="tabBarItem" systemItem="more" id="3yI-gE-gTv"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="fV5-zC-xlZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1581.1594202898552" y="323.64130434782612"/>
+        </scene>
+        <!--Tab Bar Controller-->
+        <scene sceneID="Dv5-qS-1DU">
+            <objects>
+                <tabBarController id="DuV-UC-Rez" sceneMemberID="viewController">
+                    <tabBar key="tabBar" contentMode="scaleToFill" id="nCa-ut-7Mr">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="Ao9-yg-bRd" kind="relationship" relationship="viewControllers" id="Kbk-BS-lFx"/>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="viewControllers" id="dA9-cR-gxr"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="01e-e7-XbH" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-2404" y="-259"/>
         </scene>
     </scenes>
     <resources>

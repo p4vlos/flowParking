@@ -25,7 +25,7 @@ class Position {
 //                                       9483: [51.296685, 1.065357],
 //                                       23240: [51.296592, 1.065457],
 //                                       25488: [51.296497, 1.065561]]
-    static var parkingSpacesList
+   static var parkingSpacesList
         = [
             //First space
             ParkingSpace(
@@ -285,6 +285,4 @@ class Position {
               edge5: CLLocationCoordinate2D(latitude: 51.296543, longitude: 1.065025)
             )
     ]
-    
-    
 }
