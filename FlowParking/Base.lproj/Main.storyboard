@@ -83,7 +83,7 @@
             </objects>
             <point key="canvasLocation" x="-1581.1594202898552" y="-421.46739130434787"/>
         </scene>
-        <!--View Controller-->
+        <!--Info-->
         <scene sceneID="1bO-cm-Zxz">
             <objects>
                 <viewController id="Ao9-yg-bRd" sceneMemberID="viewController">
@@ -111,7 +111,7 @@
                             <constraint firstItem="1Ib-GE-e1e" firstAttribute="trailing" secondItem="ckM-e2-I2i" secondAttribute="trailingMargin" id="uAy-Tg-CUi"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" systemItem="more" id="3yI-gE-gTv"/>
+                    <tabBarItem key="tabBarItem" title="Info" image="infoLogo" id="3yI-gE-gTv"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fV5-zC-xlZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -138,6 +138,7 @@
     </scenes>
     <resources>
         <image name="FlowLogoDark" width="550" height="200"/>
+        <image name="infoLogo" width="25" height="25"/>
         <image name="mapIcon" width="17" height="24"/>
     </resources>
 </document>
