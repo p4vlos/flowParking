@@ -243,6 +243,17 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
                         point.coordinate.longitude = pos.1
                         self.mapView.removeAnnotations(self.mapView.annotations)
                         mapView.addAnnotation(point)
+                        
+                        //changed the first position of the route with the point
+                        Position.route[0] = Route(
+                            edge1: CLLocationCoordinate2D(latitude: point.coordinate.latitude, longitude: point.coordinate.longitude),
+                            edge2: CLLocationCoordinate2D(latitude: 51.296470, longitude: 1.065455),
+                            edge3: CLLocationCoordinate2D(latitude: 51.296386, longitude: 1.065269),
+                            edge4: CLLocationCoordinate2D(latitude: 51.296536, longitude: 1.065091),
+                            edge5: CLLocationCoordinate2D(latitude: 51.296519, longitude: 1.065053)
+                        )
+                        addPolyline()
+                        
                     }else {
                         //Var position is now updated to the newest position
                         position = pos
@@ -261,7 +272,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
                         self.mapView.removeAnnotations(self.mapView.annotations)
                         mapView.addAnnotation(point)
                         
-                        //changed the first position of the rout iwth the point
+                        //changed the first position of the route with the point
                         Position.route[0] = Route(
                             edge1: CLLocationCoordinate2D(latitude: point.coordinate.latitude, longitude: point.coordinate.longitude),
                             edge2: CLLocationCoordinate2D(latitude: 51.296470, longitude: 1.065455),

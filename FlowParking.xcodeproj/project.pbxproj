@@ -129,7 +129,7 @@
 				TargetAttributes = {
 					D97DB7D21E326D6E008ABC9E = {
 						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = WWK47579VD;
+						DevelopmentTeam = 9WA6K9AL28;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.iCloud = {
@@ -304,7 +304,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = WWK47579VD;
+				DEVELOPMENT_TEAM = 9WA6K9AL28;
 				INFOPLIST_FILE = FlowParking/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = pavlosnicolaou.FlowParking;
@@ -317,7 +317,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = WWK47579VD;
+				DEVELOPMENT_TEAM = 9WA6K9AL28;
 				INFOPLIST_FILE = FlowParking/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = pavlosnicolaou.FlowParking;
