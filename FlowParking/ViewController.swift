@@ -187,7 +187,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         var posx3 = 0.0
         var posy3 = 0.0
         //Position of one of the beacons
-        let position = (51.296685, 1.065357)
+        var position = (51.296685, 1.065357)
         
         if beacons.count > 0 {
             
@@ -235,12 +235,25 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
                     var pos = data.trilateration()
                     
                     if pos.0.isNaN || pos.0.isInfinite || pos.1.isNaN || pos.1.isInfinite {
+                        //Use the previous position obtained
                         pos = position
+                        
+                        // Add annotation to the map with the position
+                        let point = MKPointAnnotation()
+                        point.coordinate.latitude = pos.0
+                        point.coordinate.longitude = pos.1
+                        self.mapView.removeAnnotations(self.mapView.annotations)
+                        mapView.addAnnotation(point)
                     }else {
+                        //Var position is now updated to the newest position
+                        position = pos
+                        print("Trilateration position: \(pos) \n")
                         ViewController.message += "Trilateration position: \(pos) \n"
                         
+                        //Project position to the driving path
                         let projectedPosition = projectNodeToEdge(point: CLLocationCoordinate2D(latitude: pos.0, longitude: pos.1))
-                        print(projectedPosition)
+                        print("Projected position: \(projectedPosition) \n")
+                        ViewController.message += "Projected position: \(projectedPosition) \n"
                         
                         // Add annotation to the map with the position
                         let point = MKPointAnnotation()
