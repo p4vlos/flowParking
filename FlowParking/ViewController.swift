@@ -24,6 +24,10 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     let latitude = 51.296634
     let longitude = 1.065126
     var locationManager: CLLocationManager!
+    //Position of one of the beacons
+    var position = (51.296685, 1.065357)
+    var deletePolyline = false
+    var polylineAux = MKPolyline()
     
     
     override func viewDidLoad() {
@@ -69,8 +73,14 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         
         for line in Position.route {
             let polyline = MKPolyline(coordinates: &line.coordinates, count: line.coordinates.count)
-            
+            if deletePolyline == true{
+                mapView?.remove(polylineAux)
+            }
             mapView?.add(polyline)
+            
+            polylineAux = polyline
+            deletePolyline = true
+            
         }
     }
     
@@ -155,6 +165,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
             let beaconRegion = CLBeaconRegion(proximityUUID: uuid as UUID, identifier: "MyBeacon")
             locationManager.startMonitoring(for: beaconRegion)
             locationManager.startRangingBeacons(in: beaconRegion)
+            
         }
         else {
             NSLog("Invalid UUID format")
@@ -185,8 +196,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         var posy2 = 0.0
         var posx3 = 0.0
         var posy3 = 0.0
-        //Position of one of the beacons
-        var position = (51.296685, 1.065357)
+        
         
         if beacons.count > 0 {
             
@@ -232,26 +242,40 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
                     
                     let data = Data(beaconA: [posx1, posy1], beaconB: [posx2, posy2], beaconC: [posx3, posy3], distA: usefulBeacons[i].accuracy, distB: usefulBeacons[i+1].accuracy, distC: usefulBeacons[i+2].accuracy)
                     var pos = data.trilateration()
+                    print("Trilateration position: \(pos) \n")
+                    ViewController.message += "Trilateration position: \(pos) \n"
                     
                     if pos.0.isNaN || pos.0.isInfinite || pos.1.isNaN || pos.1.isInfinite {
                         //Use the previous position obtained
                         pos = position
                         
                         // Add annotation to the map with the position
+                        mapView.removeAnnotations(mapView.annotations)
                         let point = MKPointAnnotation()
                         point.coordinate.latitude = pos.0
                         point.coordinate.longitude = pos.1
-                        self.mapView.removeAnnotations(self.mapView.annotations)
+                        
                         mapView.addAnnotation(point)
                         
                         //changed the first position of the route with the point
-                        Position.route[0] = Route(
-                            edge1: CLLocationCoordinate2D(latitude: point.coordinate.latitude, longitude: point.coordinate.longitude),
-                            edge2: CLLocationCoordinate2D(latitude: 51.296470, longitude: 1.065455),
-                            edge3: CLLocationCoordinate2D(latitude: 51.296386, longitude: 1.065269),
-                            edge4: CLLocationCoordinate2D(latitude: 51.296536, longitude: 1.065091),
-                            edge5: CLLocationCoordinate2D(latitude: 51.296519, longitude: 1.065053)
-                        )
+                        
+                        Position.route = [
+                            Route(
+                                edge1: CLLocationCoordinate2D(latitude: point.coordinate.latitude, longitude: point.coordinate.longitude),
+                                edge2: CLLocationCoordinate2D(latitude: 51.296470, longitude: 1.065455),
+                                edge3: CLLocationCoordinate2D(latitude: 51.296386, longitude: 1.065269),
+                                edge4: CLLocationCoordinate2D(latitude: 51.296536, longitude: 1.065091),
+                                edge5: CLLocationCoordinate2D(latitude: 51.296519, longitude: 1.065053)
+                                
+                            ),
+                            Route(
+                                edge1: CLLocationCoordinate2D(latitude: 51.296543, longitude: 1.065025),
+                                edge2: CLLocationCoordinate2D(latitude: 51.296531, longitude: 1.064996),
+                                edge3: CLLocationCoordinate2D(latitude: 51.296478, longitude: 1.065052),
+                                edge4: CLLocationCoordinate2D(latitude: 51.296495, longitude: 1.065078),
+                                edge5: CLLocationCoordinate2D(latitude: 51.296543, longitude: 1.065025)
+                            )]
+                        
                         addPolyline()
                         
                     }else {
@@ -266,20 +290,30 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
                         ViewController.message += "Projected position: \(projectedPosition) \n"
                         
                         // Add annotation to the map with the position
+                        mapView.removeAnnotations(mapView.annotations)
+                        
                         let point = MKPointAnnotation()
                         point.coordinate.latitude = projectedPosition.latitude
                         point.coordinate.longitude = projectedPosition.longitude
-                        self.mapView.removeAnnotations(self.mapView.annotations)
                         mapView.addAnnotation(point)
                         
                         //changed the first position of the route with the point
-                        Position.route[0] = Route(
-                            edge1: CLLocationCoordinate2D(latitude: point.coordinate.latitude, longitude: point.coordinate.longitude),
-                            edge2: CLLocationCoordinate2D(latitude: 51.296470, longitude: 1.065455),
-                            edge3: CLLocationCoordinate2D(latitude: 51.296386, longitude: 1.065269),
-                            edge4: CLLocationCoordinate2D(latitude: 51.296536, longitude: 1.065091),
-                            edge5: CLLocationCoordinate2D(latitude: 51.296519, longitude: 1.065053)
-                        )
+                        Position.route = [
+                            Route(
+                                edge1: CLLocationCoordinate2D(latitude: point.coordinate.latitude, longitude: point.coordinate.longitude),
+                                edge2: CLLocationCoordinate2D(latitude: 51.296470, longitude: 1.065455),
+                                edge3: CLLocationCoordinate2D(latitude: 51.296386, longitude: 1.065269),
+                                edge4: CLLocationCoordinate2D(latitude: 51.296536, longitude: 1.065091),
+                                edge5: CLLocationCoordinate2D(latitude: 51.296519, longitude: 1.065053)
+                                
+                            ),
+                            Route(
+                                edge1: CLLocationCoordinate2D(latitude: 51.296543, longitude: 1.065025),
+                                edge2: CLLocationCoordinate2D(latitude: 51.296531, longitude: 1.064996),
+                                edge3: CLLocationCoordinate2D(latitude: 51.296478, longitude: 1.065052),
+                                edge4: CLLocationCoordinate2D(latitude: 51.296495, longitude: 1.065078),
+                                edge5: CLLocationCoordinate2D(latitude: 51.296543, longitude: 1.065025)
+                            )]
                         addPolyline()
                     }
                     
@@ -314,20 +348,7 @@ private extension MKPolyline {
 
 //MKMapViewDelegate
 extension ViewController: MKMapViewDelegate {
-    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        if annotation is MKUserLocation {
-            return nil
-        }
-            
-        else {
-            let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "annotationView") ?? MKAnnotationView()
-            annotationView.image = UIImage(named: "place icon")
-            annotationView.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
-            annotationView.canShowCallout = true
-            return annotationView
-        }
-    }
-    
+        
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
         if overlay is MKCircle {
             let renderer = MKCircleRenderer(overlay: overlay)
