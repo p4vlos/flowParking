@@ -22,10 +22,16 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="13M-Bs-Syg">
-                                <rect key="frame" x="131" y="628" width="152" height="58"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="38"/>
-                                <state key="normal" title="Continue">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="parkingLotImg" translatesAutoresizingMaskIntoConstraints="NO" id="2Kp-DJ-vIg" customClass="park">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="13M-Bs-Syg">
+                                <rect key="frame" x="103.33333333333331" y="636" width="209" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="209" id="I4C-dc-o1u"/>
+                                    <constraint firstAttribute="height" constant="50" id="Y5X-gB-Ts2"/>
+                                </constraints>
+                                <state key="normal" image="continueBtn">
                                     <color key="titleColor" red="0.13725490196078433" green="0.61176470588235299" blue="0.43529411764705883" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <connections>
@@ -38,17 +44,21 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="2Kp-DJ-vIg" firstAttribute="top" secondItem="wFk-pp-rGB" secondAttribute="top" id="0rE-Y6-jKe"/>
                             <constraint firstItem="13M-Bs-Syg" firstAttribute="centerX" secondItem="wFk-pp-rGB" secondAttribute="centerX" id="3tG-xO-Ai1"/>
                             <constraint firstItem="kNd-Oa-2mc" firstAttribute="top" secondItem="13M-Bs-Syg" secondAttribute="bottom" constant="50" id="6Ft-hp-aaQ"/>
                             <constraint firstItem="Wqj-os-2Bk" firstAttribute="leading" secondItem="wFk-pp-rGB" secondAttribute="leading" constant="8" id="Kn7-eD-bF9"/>
+                            <constraint firstItem="kNd-Oa-2mc" firstAttribute="top" secondItem="2Kp-DJ-vIg" secondAttribute="bottom" id="Tjh-oo-939"/>
                             <constraint firstAttribute="trailing" secondItem="Wqj-os-2Bk" secondAttribute="trailing" constant="8" id="blK-zH-DKJ"/>
+                            <constraint firstAttribute="trailing" secondItem="2Kp-DJ-vIg" secondAttribute="trailing" id="kR5-xw-9JG"/>
                             <constraint firstItem="Wqj-os-2Bk" firstAttribute="top" secondItem="O7q-pc-S8w" secondAttribute="bottom" constant="16" id="tUX-Kj-ft5"/>
+                            <constraint firstItem="2Kp-DJ-vIg" firstAttribute="leading" secondItem="wFk-pp-rGB" secondAttribute="leading" id="xr2-3H-F0N"/>
                         </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7K2-bU-eob" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-3361" y="-259"/>
+            <point key="canvasLocation" x="-3362.3188405797105" y="-259.23913043478262"/>
         </scene>
         <!--Park me-->
         <scene sceneID="tne-QT-ifu">
@@ -98,7 +108,7 @@
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="1Ib-GE-e1e">
                                 <rect key="frame" x="20" y="36" width="374" height="651"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <string key="text">Parking with Beacons is an app developed for the company FlowParking to be able to localise a car in a map, inside an underground parking area, through the use of Bluetooth devices called Beacons.</string>
+                                <string key="text">Parking with Beacons is an app developed for the company FlowParking to be able to localise a car in a map, inside an underground parking area, through the use of Bluetooth devices called Beacons. The application receives the identification and signal strength of the closest Beacons and through algorithms of trilateration and projection in the road, is able to return the position of the car.</string>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="23"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
@@ -138,7 +148,9 @@
     </scenes>
     <resources>
         <image name="FlowLogoDark" width="550" height="200"/>
+        <image name="continueBtn" width="209" height="50"/>
         <image name="infoLogo" width="25" height="25"/>
         <image name="mapIcon" width="17" height="24"/>
+        <image name="parkingLotImg" width="1125" height="2000"/>
     </resources>
 </document>
