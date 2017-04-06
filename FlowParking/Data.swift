@@ -80,16 +80,6 @@ class Data {
             let LonC = beaconC[1]
             let DistC = distC/1000
             
-            //let LatA = 51.296761//37.418436
-            //let LonA = 1.065229//-121.963477
-            //let DistA = 12.7821416673243//0.265710701754
-            //let LatB = 51.296685//37.417243
-            //let LonB = 1.065357 //-121.961889
-            //let DistB = 14.6779926762207//0.234592423446
-            //let LatC = 51.296761//37.418692
-            //let LonC = 1.065229//-121.960194
-            //let DistC =  12.8570178450369 //0.0548954278262
-        
         
         
             //#using authalic sphere
@@ -100,16 +90,8 @@ class Data {
             let xA = (earthR * (cos(RADIANS * LatA) * cos(RADIANS * LonA)))
             let yA = (earthR * (cos(RADIANS * LatA) * sin(RADIANS * LonA)))
             let zA = (earthR * (sin(RADIANS * LatA)))
-            
-            print("-------------- ")
-            //print("DistA \(DistA)")
-            //print("DistB \(DistB)")
-            //print("DistC \(DistC)")
-            
-            //        print("xA \(xA) \n")
-            //        print("yA \(yA) \n")
-            //        print("zA \(zA) \n")
-            
+        
+        
             let xB = (earthR * (cos(RADIANS * LatB) * cos(RADIANS * LonB)))
             let yB = (earthR * (cos(RADIANS * LatB) * sin(RADIANS * LonB)))
             let zB = (earthR * (sin(RADIANS * LatB)))
@@ -144,27 +126,21 @@ class Data {
             //    #from wikipedia
             //    #plug and chug using above values
             
-            //print("d \(d) \n")
+    
             
             let x = (pow(DistA,2) - pow(DistB,2) + pow(d,2))/(2*d)
             let y = ((pow(DistA,2) - pow(DistC,2) + pow(i,2) + pow(j,2))/(2*j)) - ((i/j)*x)
             
-            //        print("x \(x) \n")
-            //        print("y \(y) \n")
-            
+        
             //    # only one case shown here
             let z = sqrt(pow(DistA,2) - pow(x,2) - pow(y,2))
             
-            
-            //        print("pow(DistA,2), pow(x,2) , pow(y,2) \(pow(DistA,2), pow(x,2), pow(y,2)) \n")
-            //        print("z \(z) \n")
-            //
             //    #triPt is an array with ECEF x,y,z of trilateration point
             
             let addAux = add(vector1: P1, vector2: (multiply(vector: ex, number: x)))
-            //print("addAux \(addAux) \n")
+        
             let addAux2 = add(vector1: (multiply(vector: ey, number: y)), vector2: (multiply(vector: ez, number: z)))
-            //print("addAux2 \(addAux2) \n")
+        
             var triPt = add(vector1: addAux, vector2: addAux2)
             
             //
@@ -177,6 +153,37 @@ class Data {
         
 
         return (lat,lon)
+    }
+    
+    func trilaterationInMeters() -> (Double, Double) {
+        
+        let W: Double
+        let Z: Double
+        let x: Double
+        var y: Double
+        let y2: Double
+        let xA = beaconA[0]
+        let yA = beaconA[1]
+        let xB = beaconB[0]
+        let yB = beaconB[1]
+        let xC = beaconC[0]
+        let yC = beaconC[1]
+        
+        
+        
+        //Z, x, y, y2;
+        W = distA*distA - distB*distB - Double(xA*xA) - Double(yA*yA) + Double(xB*xB) + Double(yB*yB)
+        Z = distB*distB - distC*distC - Double(xB*xB) - Double(yB*yB) + Double(xC*xC) + Double(yC*yC);
+        
+        x = (W*(Double(yC - yB)) - Z*(Double(yB - yA))) / Double(2*((xB-xA)*(yC-yB) - (xC-xB)*(yB-yA)));
+        y = (W - (2*x*Double(xB-xA))) / (Double(2*(yB-yA)));
+        //y2 is a second measure of y to mitigate errors
+        y2 = (Z - 2*x*Double(xC-xB)) / (Double(2*(yC-yB)));
+        
+        y = (y + y2) / 2;
+        
+        return (x,y)
+        
     }
 
 }

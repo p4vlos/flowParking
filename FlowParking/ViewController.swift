@@ -12,46 +12,19 @@ import Social
 import MapKit
 
 class ViewController: UIViewController, CLLocationManagerDelegate {
-
-
+    
+    
     @IBOutlet weak var mapView: MKMapView!
     
-    //let parkingSpaces = ParkingSpace.getParkingSpaces()
     
     var mapHasCenteredOnce = false
     
-//    @IBOutlet weak var distanceLbl: UILabel!
-//    @IBOutlet weak var minorLbl: UILabel!
-//    @IBOutlet weak var rssiLbl: UILabel!
-//    @IBOutlet weak var accuracyLbl: UILabel!
-//    Previous share button
-//    @IBAction func share(_ sender: UIButton) {
-//        
-//        let sheet = UIActivityViewController(
-//            activityItems: [ViewController.message],
-//            applicationActivities: nil)
-//        self.present(sheet, animated: true, completion: nil)
-//    }
-    
     static var message: String = ""
     
-    let latitude = 51.296624
-    let longitude = 1.064893
+    let latitude = 51.296634
+    let longitude = 1.065126
     var locationManager: CLLocationManager!
     
-    var beaconsPos: [Int: [Double]] = [42397: [51.296624, 1.064893],
-                                       1819: [51.296529, 1.064997],
-                                       59845: [51.296441, 1.065092],
-                                       54060: [51.296356, 1.065246],
-                                       34499: [51.296692, 1.065065],
-                                       2627: [51.296634, 1.065126],
-                                       29950: [51.296548, 1.065225],
-                                       20588: [51.296458, 1.065325],
-                                       11731: [51.296409, 1.065383],
-                                       59879: [51.296761, 1.065229],
-                                       9483: [51.296685, 1.065357],
-                                       23240: [51.296592, 1.065457],
-                                       25488: [51.296497, 1.065561]]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -62,14 +35,14 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         
         // setting map view delegate with controller
         self.mapView.delegate = self
-
+        
         print("did load")
         
         mapView.mapType = .satellite
         
-       // let location = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+        // let location = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
         let span = MKCoordinateSpanMake(0.0015, 0.0015)
-       // let region = MKCoordinateRegionMake(location, span)
+        // let region = MKCoordinateRegionMake(location, span)
         let region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: latitude, longitude: longitude), span: span)
         mapView.setRegion(region, animated: true)
         
@@ -97,27 +70,75 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         
         for line in Position.route {
             let polyline = MKPolyline(coordinates: &line.coordinates, count: line.coordinates.count)
-        
+            
             mapView?.add(polyline)
         }
     }
     
+    // Returns projection point and distance
+    func projectNodeToEdge(point: CLLocationCoordinate2D) -> (CLLocationCoordinate2D) {
+        
+        var dist = -1.0
+        var proj = CLLocationCoordinate2D()
+        
+        for edge in Position.edges {
+            
+            let apx = point.latitude - edge.point1.latitude
+            let apy = point.longitude - edge.point1.longitude
+            let abx = edge.point2.latitude - edge.point1.latitude
+            let aby = edge.point2.longitude - edge.point1.longitude
+            
+            let ab2 = abx * abx + aby * aby
+            let ap_ab = apx * abx + apy * aby
+            var t = ap_ab / ab2
+            // Clamp to segment
+            if (t < 0) {
+                t = 0
+            } else if (t > 1) {
+                t = 1
+            }
+            let p = CLLocationCoordinate2D(latitude: edge.point1.latitude + abx * t, longitude: edge.point1.longitude + aby * t)
+            let d = distance(pA: point, pB: p)
+            
+            if dist == -1.0{
+                dist = d
+                proj = p
+            }
+            if d < dist {
+                dist = d
+                proj = p
+            }
+            
+        }
+        return (proj)
+        
+    }
+    //Returns distance from a point to an edge
+    func distance(pA: CLLocationCoordinate2D, pB: CLLocationCoordinate2D) -> Double {
+        let dx = pA.latitude - pB.latitude
+        let dy = pA.longitude - pB.longitude
+        let distance = sqrt(dx * dx + dy * dy)
+        return distance
+    }
+    
+    
+    
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-        if status == .authorizedWhenInUse {
+        if status == .authorizedAlways {
             print("status authorised")
             
             //Beacon's code
-//            if CLLocationManager.isMonitoringAvailable(for: CLBeaconRegion.self) {
-//                print("is monitoring")
-//                if CLLocationManager.isRangingAvailable() {
-//                    print("scanning")
-//                    startScanning()
-//                }
-//            }
+            if CLLocationManager.isMonitoringAvailable(for: CLBeaconRegion.self) {
+                print("is monitoring")
+                if CLLocationManager.isRangingAvailable() {
+                    print("scanning")
+                    startScanning()
+                }
+            }
         }
     }
     
-
+    
     
     func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
         let location = locations.last as! CLLocation
@@ -144,11 +165,11 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     
     
     
-    /* Beacon's code
+    //Beacon's code
     func locationManager(_ manager: CLLocationManager, didRangeBeacons beacons: [CLBeacon], in region: CLBeaconRegion) {
         
-        //print(manager.desiredAccuracy)
-    
+        
+        
         let date = NSDate()
         let calendar = NSCalendar.current
         let hour = calendar.component(.hour, from: date as Date)
@@ -159,90 +180,80 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         let total = "Number of beacons: \(beacons.count)"
         print(total)
         
-        var minor1 = 0
-        var minor2  = 0
-        var accuracy1 = 0.0
-        var accuracy2 = 0.0
-        
-        var triCount = 0
+        var posx1 = 0.0
+        var posy1 = 0.0
+        var posx2 = 0.0
+        var posy2 = 0.0
+        var posx3 = 0.0
+        var posy3 = 0.0
+        //Position of one of the beacons
+        let position = (51.296685, 1.065357)
         
         if beacons.count > 0 {
             
-            print("Found more than one beacon")
+            print("Found at least one beacon")
             
-            for i in 0..<beacons.count{
-                
-                ViewController.message += "---- Time: \(time) Beacon(\(i)) Minor: \(beacons[i].minor) RSSI: \(beacons[i].rssi) Accuracy: \(beacons[i].accuracy) "
-                updateDistance(beacons[i].proximity)
-                let minor = beacons[i].minor as! Int
-                if let lat = beaconsPos[minor]?[0]{
-                    print("Latitude of beacon \(minor): \(lat)")
-                }
-                if let lon = beaconsPos[minor]?[1]{
-                    print("Longitude of beacon \(minor): \(lon)")
-                }
-               
-                if (beacons[i].rssi != 0){
-                    switch triCount{
-                        case 0:
-                            minor1 = beacons[i].minor as! Int
-                            accuracy1 = beacons[i].accuracy as Double
-                            triCount += 1
-                        case 1:
-                            minor2 = beacons[i].minor as! Int
-                            accuracy2 = beacons[i].accuracy as Double
-                            triCount += 1
-                        case 2:
-                            let lat1 = beaconsPos[minor1]![0]
-                            let lon1 = beaconsPos[minor1]![1]
-                            
-                            let lat2 = beaconsPos[minor2]![0]
-                            let lon2 = beaconsPos[minor2]![1]
-                            
-                            let minor3 = beacons[i].minor as! Int
-                            let lat3 = beaconsPos[minor3]![0]
-                            let lon3 = beaconsPos[minor3]![1]
-                            
-                            let data = Data(beaconA: [lat1, lon1], beaconB: [lat2, lon2], beaconC: [lat3, lon3], distA: accuracy1, distB: accuracy2, distC: beacons[i].accuracy)
-                        
-                            let result = data.trilateration()
-                            print(result)
-                            
-                            
-                            ViewController.message += "Trilateration position: \(result) \n"
-                            let locValue:CLLocationCoordinate2D = manager.location!.coordinate
-                            ViewController.message += "CoreLoc position: \(locValue.latitude) \(locValue.longitude) \n"
-                            
-                            
-                            // ------ MAP ------
-           
-                            // add mark
-                            let point = MKPointAnnotation()
-                            point.coordinate.latitude = result.0
-                            point.coordinate.longitude = result.1
-                            mapView.addAnnotation(point)
-                            
-                            
-                            // ------ MAP ------
-                            
-                            triCount += 1
-                        case 3:
-                            minor1 = Int(beacons[i].minor)
-                            accuracy1 = beacons[i].accuracy
-                            triCount = 1
-                        default:
-                            print("Default case")
+            let usefulBeacons = beacons.filter{$0.rssi != 0}
+            
+            
+            if usefulBeacons.count >= 3 {
+                for i in 0...(usefulBeacons.count)-3 {
+                    
+                    ViewController.message += "---- Time: \(time) Beacon(\(i)) Minor: \(usefulBeacons[i].minor) RSSI: \(usefulBeacons[i].rssi) Accuracy: \(usefulBeacons[i].accuracy) \n"
+                    
+                    ViewController.message += "---- Time: \(time) Beacon(\(i+1)) Minor: \(usefulBeacons[i+1].minor) RSSI: \(usefulBeacons[i+1].rssi) Accuracy: \(usefulBeacons[i+1].accuracy) \n"
+                    
+                    ViewController.message += "---- Time: \(time) Beacon(\(i+2)) Minor: \(usefulBeacons[i+2].minor) RSSI: \(usefulBeacons[i+2].rssi) Accuracy: \(usefulBeacons[i+2].accuracy) \n"
+                    //updateDistance(beacons[i].proximity)
+                    
+                    let b1 = Int(usefulBeacons[i].minor)
+                    let b2 = Int(usefulBeacons[i+1].minor)
+                    let b3 = Int(usefulBeacons[i+2].minor)
+                    
+                    //Beacons positions in the room
+                    
+                    if (Position.beaconsPos[b1]?[0]) != nil{
+                        posx1 = Position.beaconsPos[b1]![0]
                     }
+                    if (Position.beaconsPos[b1]?[1]) != nil{
+                        posy1 = Position.beaconsPos[b1]![1]
+                    }
+                    if (Position.beaconsPos[b2]?[0]) != nil{
+                        posx2 = Position.beaconsPos[b2]![0]
+                    }
+                    if (Position.beaconsPos[b2]?[1]) != nil{
+                        posy2 = Position.beaconsPos[b2]![1]
+                    }
+                    if (Position.beaconsPos[b3]?[0]) != nil{
+                        posx3 = Position.beaconsPos[b3]![0]
+                    }
+                    if (Position.beaconsPos[b3]?[1]) != nil{
+                        posy3 = Position.beaconsPos[b3]![1]
+                    }
+                    
+                    let data = Data(beaconA: [posx1, posy1], beaconB: [posx2, posy2], beaconC: [posx3, posy3], distA: usefulBeacons[i].accuracy, distB: usefulBeacons[i+1].accuracy, distC: usefulBeacons[i+2].accuracy)
+                    var pos = data.trilateration()
+                    
+                    if pos.0.isNaN || pos.0.isInfinite || pos.1.isNaN || pos.1.isInfinite {
+                        pos = position
+                    }else {
+                        ViewController.message += "Trilateration position: \(pos) \n"
+                        
+                        let projectedPosition = projectNodeToEdge(point: CLLocationCoordinate2D(latitude: pos.0, longitude: pos.1))
+                        print(projectedPosition)
+                        
+                        // Add annotation to the map with the position
+                        let point = MKPointAnnotation()
+                        point.coordinate.latitude = projectedPosition.latitude
+                        point.coordinate.longitude = projectedPosition.longitude
+                        self.mapView.removeAnnotations(self.mapView.annotations)
+                        mapView.addAnnotation(point)
+                    }
+                    
                 }
-               
-                //printing all info for the beacon
-//                self.minorLbl.text = "Beacon's Minor: \(beacons[0].minor)"
-//                self.accuracyLbl.text = "Beacon's Accuracy: \(beacons[0].accuracy)"
-//                self.rssiLbl.text = "Beacon's RSSI: \(beacons[0].rssi)"
                 
-                //var beaconA[0] = beacons[1].minor[0]
             }
-            print("out of the for")
+            
         } else {
             // No beacons around Alert
             // create the alert
@@ -256,34 +267,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         }
     }
     
-    func updateDistance(_ distance: CLProximity) {
-        UIView.animate(withDuration: 0.3) {
-            switch distance {
-            case .unknown:
-                //self.view.backgroundColor = UIColor.gray
-                //self.distanceLbl.text = "Proximity Unknonw"
-                print("distance Unknown")
-                ViewController.message += "Distance: unknown \n"
-            case .far:
-                //self.view.backgroundColor = UIColor.blue
-                //self.distanceLbl.text = "Proximity Far"
-                print("distance Far")
-                ViewController.message += "Distance: far \n"
-            case .near:
-                //self.view.backgroundColor = UIColor.orange
-                //self.distanceLbl.text = "Proximity Near"
-                print("distance Near")
-                ViewController.message += "Distance: near \n"
-            case .immediate:
-                //self.view.backgroundColor = UIColor.red
-                //self.distanceLbl.text = "Proximity Immediate"
-                print("distance Immediate")
-                ViewController.message += "Distance: immediate \n"
-            }
-        }
-    }
-    
-    */
 }
 
 private extension MKPolyline {
@@ -337,12 +320,5 @@ extension ViewController: MKMapViewDelegate {
         return MKOverlayRenderer()
     }
     
-    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
-       // guard let annotation = view.annotation as? Place, let title = annotation.title else { return }
-        
-       // let alertController = UIAlertController(title: "Welcome to \(title)", message: "You've selected \(title)", preferredStyle: .alert)
-        //let cancelAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
-       // alertController.addAction(cancelAction)
-        //present(alertController, animated: true, completion: nil)
-    }
+    
 }

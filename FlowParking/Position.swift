@@ -11,20 +11,23 @@ import MapKit
 
 class Position {
     
-    //we should include this as well in here
-//    static var beaconsPos: [Int: [Double]] = [42397: [51.296624, 1.064893],
-//                                       1819: [51.296529, 1.064997],
-//                                       59845: [51.296441, 1.065092],
-//                                       54060: [51.296356, 1.065246],
-//                                       34499: [51.296692, 1.065065],
-//                                       2627: [51.296634, 1.065126],
-//                                       29950: [51.296548, 1.065225],
-//                                       20588: [51.296458, 1.065325],
-//                                       11731: [51.296409, 1.065383],
-//                                       59879: [51.296761, 1.065229],
-//                                       9483: [51.296685, 1.065357],
-//                                       23240: [51.296592, 1.065457],
-//                                       25488: [51.296497, 1.065561]]
+    
+    static var beaconsPos: [Int: [Double]] = [42397: [51.296624, 1.064893],
+                                       1819: [51.296529, 1.064997],
+                                       59845: [51.296441, 1.065092],
+                                       54060: [51.296356, 1.065246],
+                                       34499: [51.296692, 1.065065],
+                                       2627: [51.296634, 1.065126],
+                                       29950: [51.296548, 1.065225],
+                                       20588: [51.296458, 1.065325],
+                                       11731: [51.296409, 1.065383],
+                                       59879: [51.296761, 1.065229],
+                                       9483: [51.296685, 1.065357],
+                                       23240: [51.296592, 1.065457],
+                                       25488: [51.296497, 1.065561]]
+   
+    static var edges = [Edge(point1: CLLocationCoordinate2D(latitude: 51.296692, longitude: 1.065209), point2: CLLocationCoordinate2D(latitude: 51.296453, longitude: 1.065460)), Edge(point1: CLLocationCoordinate2D(latitude: 51.296484, longitude: 1.065499), point2: CLLocationCoordinate2D(latitude: 51.296369, longitude: 1.065221)), Edge(point1: CLLocationCoordinate2D(latitude: 51.296382, longitude: 1.065276), point2: CLLocationCoordinate2D(latitude: 51.296645, longitude: 1.064976)), Edge(point1: CLLocationCoordinate2D(latitude:  51.296615, longitude: 1.064952), point2: CLLocationCoordinate2D(latitude: 51.296707, longitude: 1.065182))]
+    
    static var parkingSpacesList
         = [
             //First space
