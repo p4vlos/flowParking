@@ -25,6 +25,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     let longitude = 1.065126
     var locationManager: CLLocationManager!
     
+    var deletePolyline = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -68,9 +69,16 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         mapView?.delegate = self
         
         for line in Position.route {
-            let polyline = MKPolyline(coordinates: &line.coordinates, count: line.coordinates.count)
+            let polyline2 = MKPolyline(coordinates: &line.coordinates, count:  line.coordinates.count)
+            mapView?.add(polyline2)
             
-            mapView?.add(polyline)
+            let polyline = polyline2
+            if deletePolyline == true {
+                mapView?.remove(polyline)
+            }
+            //let polyline2 = polyline
+            deletePolyline = true
+            
         }
     }
     
@@ -159,7 +167,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         else {
             NSLog("Invalid UUID format")
         }
-        
     }
     
     
@@ -243,6 +250,25 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
                         point.coordinate.longitude = pos.1
                         self.mapView.removeAnnotations(self.mapView.annotations)
                         mapView.addAnnotation(point)
+                        
+                        //changed the first position of the rout iwth the point
+                        Position.route = [
+                            Route(
+                            edge1: CLLocationCoordinate2D(latitude: point.coordinate.latitude, longitude: point.coordinate.longitude),
+                            edge2: CLLocationCoordinate2D(latitude: 51.296470, longitude: 1.065455),
+                            edge3: CLLocationCoordinate2D(latitude: 51.296386, longitude: 1.065269),
+                            edge4: CLLocationCoordinate2D(latitude: 51.296536, longitude: 1.065091),
+                            edge5: CLLocationCoordinate2D(latitude: 51.296519, longitude: 1.065053)
+                            ),
+                            Route(
+                            edge1: CLLocationCoordinate2D(latitude: 51.296543, longitude: 1.065025),
+                            edge2: CLLocationCoordinate2D(latitude: 51.296531, longitude: 1.064996),
+                            edge3: CLLocationCoordinate2D(latitude: 51.296478, longitude: 1.065052),
+                            edge4: CLLocationCoordinate2D(latitude: 51.296495, longitude: 1.065078),
+                            edge5: CLLocationCoordinate2D(latitude: 51.296543, longitude: 1.065025)
+                            )]
+                        addPolyline()
+                        
                     }else {
                         //Var position is now updated to the newest position
                         position = pos
@@ -303,19 +329,19 @@ private extension MKPolyline {
 
 //MKMapViewDelegate
 extension ViewController: MKMapViewDelegate {
-    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        if annotation is MKUserLocation {
-            return nil
-        }
-            
-        else {
-            let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "annotationView") ?? MKAnnotationView()
-            annotationView.image = UIImage(named: "place icon")
-            annotationView.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
-            annotationView.canShowCallout = true
-            return annotationView
-        }
-    }
+//    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+//        if annotation is MKUserLocation {
+//            return nil
+//        }
+//            
+//        else {
+//            let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "annotationView") ?? MKAnnotationView()
+//            annotationView.image = UIImage(named: "place icon")
+//            annotationView.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
+//            annotationView.canShowCallout = true
+//            return annotationView
+//        }
+//    }
     
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
         if overlay is MKCircle {
