@@ -26,7 +26,12 @@ class Position {
                                        23240: [51.296592, 1.065457],
                                        25488: [51.296497, 1.065561]]
    
-    static var edges = [Edge(point1: CLLocationCoordinate2D(latitude: 51.296692, longitude: 1.065209), point2: CLLocationCoordinate2D(latitude: 51.296453, longitude: 1.065460)), Edge(point1: CLLocationCoordinate2D(latitude: 51.296484, longitude: 1.065499), point2: CLLocationCoordinate2D(latitude: 51.296369, longitude: 1.065221)), Edge(point1: CLLocationCoordinate2D(latitude: 51.296382, longitude: 1.065276), point2: CLLocationCoordinate2D(latitude: 51.296645, longitude: 1.064976)), Edge(point1: CLLocationCoordinate2D(latitude:  51.296615, longitude: 1.064952), point2: CLLocationCoordinate2D(latitude: 51.296707, longitude: 1.065182))]
+    static var edges = [Edge(point1: CLLocationCoordinate2D(latitude: 51.296759, longitude: 1.065430), point2: CLLocationCoordinate2D(latitude: 51.296675, longitude: 1.065226)),
+                        Edge(point1: CLLocationCoordinate2D(latitude: 51.296675, longitude: 1.065226), point2: CLLocationCoordinate2D(latitude: 51.296497, longitude: 1.065427)), Edge(point1: CLLocationCoordinate2D(latitude: 51.296497, longitude: 1.065427), point2: CLLocationCoordinate2D(latitude: 51.296467, longitude: 1.065435)), Edge(point1: CLLocationCoordinate2D(latitude: 51.296467, longitude: 1.065435), point2: CLLocationCoordinate2D(latitude: 51.296451, longitude: 1.065422)), Edge(point1: CLLocationCoordinate2D(latitude: 51.296451, longitude: 1.065422), point2: (CLLocationCoordinate2D(latitude: 51.296389, longitude: 1.065267))), Edge(point1: CLLocationCoordinate2D(latitude: 51.296389, longitude: 1.065267), point2: (CLLocationCoordinate2D(latitude: 51.296409, longitude: 1.065220))), Edge(point1: CLLocationCoordinate2D(latitude: 51.296409, longitude: 1.065220), point2: CLLocationCoordinate2D(latitude: 51.296630, longitude: 1.064984)), Edge(point1: CLLocationCoordinate2D(latitude: 51.296630, longitude: 1.064984), point2: CLLocationCoordinate2D(latitude: 51.296701, longitude: 1.065161)),
+                            Edge(point1: CLLocationCoordinate2D(latitude: 51.296701, longitude: 1.065161), point2: CLLocationCoordinate2D(latitude: 51.296694, longitude: 1.065198)), Edge(point1: CLLocationCoordinate2D(latitude: 51.296694, longitude: 1.065198), point2: CLLocationCoordinate2D(latitude:  51.296675, longitude: 1.065226))]
+    
+    
+   
     
    static var parkingSpacesList
         = [
