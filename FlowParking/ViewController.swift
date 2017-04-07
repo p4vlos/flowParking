@@ -5,11 +5,14 @@
 //  Created by Diana Karina Vainberg Gauna and Pavlos Nicolaou on 16/02/2017.
 //  Copyright © 2017 Diana Karina Vainberg Gauna and Pavlos Nicolaou. All rights reserved.
 //
-//  Main functionality of the whole app is in this View Controller, Getting RSSI and Accuracy from beacons
-//  around the device. Right after we get 3 beacons' accuracies we are using trilateration algorithm that
-//  returns a position that it should be user's location. Afterwards we are doing projection to the route line
-//  that is closest to the trilateration's results and printing route line to a free parking space that we added manually
-//  for demonstration of the app.
+//  Main functionality of the whole app is in this View Controller. We are scanning to see if
+//  there are beacons around the device, then get their RSSI and accuracy. Right after we get 3
+//  beacons' which are close enough, we use their accuracies and predefined coordinates with a 
+//  trilateration algorithm that calculates the position of the user. Afterwards, we are using an
+//  algorithm that projects the position obtained to the route line that is closest to the trilateration's
+//  results. We show the position of the user with a pin in the map. Also, the parking spaces are drawn in 
+//  orange and we show one of them in green, which we decided randomly to be free, as a demonstration.
+//  Then we show the route that the car should follow to get to that parking space in green.
 //
 
 import UIKit
@@ -24,17 +27,18 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     
     static var message: String = ""
     
+    //This is the position of one of the beacons we used in the experiments, 
+    //and it will be the center of the map
     let latitude = 51.296634
     let longitude = 1.065126
     var locationManager: CLLocationManager!
     
-    //Position of one of the beacons
-    var position = (0.0, 0.0)
-    
-    // Boolean for deleting the polyline from the map
+    // Boolean we use to know if we need to delete a polyline from the map
     var deletePolyline = false
-    // An extra polyline variable we would like to use
+    // An extra polyline variable we use as an auxiliary
     var polylineAux = MKPolyline()
+    //Variable used to know which edge is the closest one to the user's 
+    //obtained position
     var closestEdgeLat = 0.0
     
     
@@ -43,28 +47,28 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         
         locationManager = CLLocationManager()
         locationManager.delegate = self
-        //location services will be always on
+        //Location services will be always on
         locationManager.requestAlwaysAuthorization()
         
-        // setting map view delegate with controller
+        //Setting map view delegate with controller
         self.mapView.delegate = self
         
         print("did load")
         
         mapView.mapType = .satellite
         
-        // let location = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
         let span = MKCoordinateSpanMake(0.0015, 0.0015)
-        // let region = MKCoordinateRegionMake(location, span)
         let region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: latitude, longitude: longitude), span: span)
         mapView.setRegion(region, animated: true)
         
-        //calling addPlygons when view did load to draw the parking spaces when the Map View is created
+        //Calling addPolygons when view did load to draw the parking spaces when 
+        //the Map View is created
         addPolygons()
         
     }
     
-    // MARK: - Draw on tha map the parking spaces so the user ca see them clearly
+    // MARK: - Function to draw the parking spaces on the map so the 
+    //user can see them clearly.
     
     func addPolygons() {
         mapView?.delegate = self
@@ -76,7 +80,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         }
     }
     
-    // MARK: - Draw route line and draw a free parking space
+    // MARK: - Function to draw in green a free parking space and the route line
+    //to get to it.
     
     func addPolyline() {
         mapView?.delegate = self
@@ -84,25 +89,28 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         for line in Position.route {
             let polyline = MKPolyline(coordinates: &line.coordinates, count: 5)
             
-            // we are checking if deletePolyline is true to delete the previous polyline and draw a new one
+            //We are checking if deletePolyline is true to delete the previous 
+            //polyline and draw a new one
             if deletePolyline == true {
-                //delete the polyline  and swift detelePolyline to false
+                //Delete the polyline from the map
                 mapView?.remove(polylineAux)
                 deletePolyline = false
             }
             
-            //adding the new polyline to a free parking space
+            //Adding the new polyline to a free parking space
             mapView?.add(polyline)
             
-            //adding the polyline to polylineAux so we can delete it right after we have a new position and a new polyline
+            //Assign the polyline to polylineAux so we can delete it right after
+            //we have a new position and a new polyline
             polylineAux = polyline
             
         }
-        //delete  previous polyline is true right after 1st loop
+        //Delete previous polyline is true right after each loop
         deletePolyline = true
     }
     
-    // MARK: - Returns projection point and distance
+    // MARK: - Function that takes the position of the user as a parameter and
+    //returns the position projected on the road and also the closest Edge to the position
     
     func projectNodeToEdge(point: CLLocationCoordinate2D) -> (CLLocationCoordinate2D, Edge) {
         
@@ -110,6 +118,10 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         var proj = CLLocationCoordinate2D()
         var closestEdge = Edge(point1: CLLocationCoordinate2D(), point2: CLLocationCoordinate2D())
         
+        //The point where the user is located is projected to each edge of the 
+        //parking space, to know the distance between the point and the edge.
+        //At the end the function returns the projected position to the closest
+        //edge, as well as the edge itself.
         for edge in Position.edges {
             
             let apx = point.latitude - edge.point1.latitude
@@ -126,14 +138,20 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
             } else if (t > 1) {
                 t = 1
             }
+            //Position obtained after projecting the point in the edge.
             let p = CLLocationCoordinate2D(latitude: edge.point1.latitude + abx * t, longitude: edge.point1.longitude + aby * t)
+            //Calculating the distance from the point to the projected point in the edge.
             let d = distance(pA: point, pB: p)
             
+            //This happens in the first loop
             if dist == -1.0{
                 dist = d
                 proj = p
                 closestEdge = edge
             }
+            //We check if the distance of this edge is smaller than the previous one,
+            //if that's the case, then we save this edge and distance, otherwise,
+            //we keep the previous one
             if d < dist {
                 dist = d
                 proj = p
@@ -146,7 +164,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         
     }
     
-    // MARK: - Returns distance from a point to an edge
+    // MARK: - Function used in the ProjectNodeToEdge function to obtain the distance from
+    //the position of the user to an edge of the parking space.
     
     func distance(pA: CLLocationCoordinate2D, pB: CLLocationCoordinate2D) -> Double {
         let dx = pA.latitude - pB.latitude
@@ -156,7 +175,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     }
     
     
-    
+    //MARK: - Function to start monitoring and scanning for beacons.
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         if status == .authorizedAlways {
             print("status authorised")
@@ -173,7 +192,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     }
     
     
-    
+    //MARK: - Function to show the map of the parking space and center it
+    //in the above defined coordinates
     func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
         let location = locations.last as! CLLocation
         
@@ -183,6 +203,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         self.mapView.setRegion(region, animated: true)
     }
     
+    //MARK: - Function to scan and range the beacons with the specified UUID
     func startScanning() {
         print("start Scanning")
         
@@ -198,9 +219,14 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         
     }
     
+    //MARK: - Function which handles what to do with the information of the 
+    //beacons found in the array called beacons. We filter the beacons to 
+    //do trilateration only with the ones that have an RSSI different from zero,
+    //and we use three each time we called the function. If the position obtained
+    //is not NaN or infinite, then we project it to the route. Finally we add an
+    //annotation in the map with the position, and show the appropriate route to 
+    //the free parking space according to the obtained position.
     func locationManager(_ manager: CLLocationManager, didRangeBeacons beacons: [CLBeacon], in region: CLBeaconRegion) {
-        
-        
         
         let date = NSDate()
         let calendar = NSCalendar.current
@@ -224,24 +250,25 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
             
             print("Found at least one beacon")
             
+            //We filter the beacons so we use only the ones that have an
+            //RSSI different from zero. Otherwise they can't be used to do
+            //trilateration.
             let usefulBeacons = beacons.filter{$0.rssi != 0}
             
-            
+            //We now have three or more
             if usefulBeacons.count >= 3 {
+                
+                //We are going to do trilateration with groups of three in the
+                //order they were found. For example with 1,2,3, then, 2,3,4, etc.
                 for i in 0...(usefulBeacons.count)-3 {
                     
-                    ViewController.message += "---- Time: \(time) Beacon(\(i)) Minor: \(usefulBeacons[i].minor) RSSI: \(usefulBeacons[i].rssi) Accuracy: \(usefulBeacons[i].accuracy) \n"
-                    
-                    ViewController.message += "---- Time: \(time) Beacon(\(i+1)) Minor: \(usefulBeacons[i+1].minor) RSSI: \(usefulBeacons[i+1].rssi) Accuracy: \(usefulBeacons[i+1].accuracy) \n"
-                    
-                    ViewController.message += "---- Time: \(time) Beacon(\(i+2)) Minor: \(usefulBeacons[i+2].minor) RSSI: \(usefulBeacons[i+2].rssi) Accuracy: \(usefulBeacons[i+2].accuracy) \n"
-                    //updateDistance(beacons[i].proximity)
                     
                     let b1 = Int(usefulBeacons[i].minor)
                     let b2 = Int(usefulBeacons[i+1].minor)
                     let b3 = Int(usefulBeacons[i+2].minor)
                     
-                    //Beacons positions in the room
+                    //We are getting the beacons positions in the parking area using the
+                    //variable defined in Data.swift
                     
                     if (Position.beaconsPos[b1]?[0]) != nil{
                         posx1 = Position.beaconsPos[b1]![0]
@@ -262,30 +289,32 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
                         posy3 = Position.beaconsPos[b3]![1]
                     }
                     
+                    //We create a Data object to which we will apply the trilateration function
                     let data = Data(beaconA: [posx1, posy1], beaconB: [posx2, posy2], beaconC: [posx3, posy3], distA: usefulBeacons[i].accuracy, distB: usefulBeacons[i+1].accuracy, distC: usefulBeacons[i+2].accuracy)
                     let pos = data.trilateration()
-                    print("Trilateration position: \(pos) \n")
-                    ViewController.message += "Trilateration position: \(pos) \n"
+                    //print("Trilateration position: \(pos) \n")
                     
                     if !(pos.0.isNaN || pos.0.isInfinite || pos.1.isNaN || pos.1.isInfinite) {
                         
-                        print("Trilateration position: \(pos) \n")
-                        ViewController.message += "Trilateration position: \(pos) \n"
+                        //print("Trilateration position: \(pos) \n")
                         
                         //Project position to the driving path
                         let projectedPosition = projectNodeToEdge(point: CLLocationCoordinate2D(latitude: pos.0, longitude: pos.1))
                         print("Projected position: \(projectedPosition) \n")
-                        ViewController.message += "Projected position: \(projectedPosition) \n"
                         
-                        // Add annotation to the map with the position
+                        
+                        //First we remove previous annotations on the map
                         mapView.removeAnnotations(mapView.annotations)
                         
+                        //Here we add an annotation to the map with the position obtained
                         let point = MKPointAnnotation()
                         point.coordinate.latitude = projectedPosition.0.latitude
                         point.coordinate.longitude = projectedPosition.0.longitude
                         mapView.addAnnotation(point)
                         
-                        
+                        //This part is to use an appropriate route from the obtained position
+                        //to the free parking space we selected, using the closest edge to the
+                        //position
                         closestEdgeLat = projectedPosition.1.point1.latitude
                         switch closestEdgeLat{
                         case 51.296467:
@@ -395,15 +424,15 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
             }
             
         } else {
-            // No beacons around Alert
+            //No beacons around Alert
             
-            // create the alert
+            //Create the alert
             let alert = UIAlertController(title: "No beacons around", message: "Out of range", preferredStyle: UIAlertControllerStyle.alert)
             
-            // add an action (button)
+            //Add an action (button)
             alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
             
-            // show the alert
+            //Show the alert
             self.present(alert, animated: true, completion: nil)
         }
     }

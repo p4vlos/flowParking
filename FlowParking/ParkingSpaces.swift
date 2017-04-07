@@ -5,7 +5,7 @@
 //  Created by Pavlos Nicolaou and Diana Karina Vainberg Gauna on 28/03/2017.
 //  Copyright © 2017 Pavlos Nicolaou and Diana Karina Vainberg Gauna. All rights reserved.
 //
-//  PakringSpace object is created to add coordinates of a parking space so we can draw them on the map to look nice
+//  This class allows to create parking spaces in the map using the four coordinates of its corners.
 //
 
 import MapKit

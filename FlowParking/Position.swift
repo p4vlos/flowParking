@@ -5,13 +5,20 @@
 //  Created by Pavlos Nicolaou and Diana Karina Vainberg Gauna on 04/04/2017.
 //  Copyright © 2017 Diana Karina Vainberg Gauna and Pavlos Nicolaou. All rights reserved.
 //
+//  Class that holds several variables with data of beacons' positions, parking spaces' positions, edges 
+//  of the parking area, position of a free parking space and coordinates of the route the car has to 
+//  follow to get to the free parking space.
+//
+//
 
 import UIKit
 import MapKit
 
 class Position {
     
-    // Beacons' locations
+    //The key of each Dictionary is a beacons' minor and the value is an
+    //array that has the location of the Beacon in latitude and longitude 
+    //coordinates
     static var beaconsPos: [Int: [Double]] = [42397: [51.296624, 1.064893],
                                               1819: [51.296529, 1.064997],
                                               59845: [51.296441, 1.065092],
@@ -26,12 +33,18 @@ class Position {
                                               23240: [51.296592, 1.065457],
                                               25488: [51.296497, 1.065561]]
     
+    
+    //This variable has all the edges that represent the drivable route of the 
+    //parking lot used in the experiments. Each edge has two pairs of latitude 
+    //and longitude coordinates representing the starting and ending point of 
+    //the edge
     static var edges = [Edge(point1: CLLocationCoordinate2D(latitude: 51.296759, longitude: 1.065430), point2: CLLocationCoordinate2D(latitude: 51.296675, longitude: 1.065226)),
                         Edge(point1: CLLocationCoordinate2D(latitude: 51.296675, longitude: 1.065226), point2: CLLocationCoordinate2D(latitude: 51.296497, longitude: 1.065427)), Edge(point1: CLLocationCoordinate2D(latitude: 51.296497, longitude: 1.065427), point2: CLLocationCoordinate2D(latitude: 51.296467, longitude: 1.065435)), Edge(point1: CLLocationCoordinate2D(latitude: 51.296467, longitude: 1.065435), point2: CLLocationCoordinate2D(latitude: 51.296451, longitude: 1.065422)), Edge(point1: CLLocationCoordinate2D(latitude: 51.296451, longitude: 1.065422), point2: (CLLocationCoordinate2D(latitude: 51.296389, longitude: 1.065267))), Edge(point1: CLLocationCoordinate2D(latitude: 51.296389, longitude: 1.065267), point2: (CLLocationCoordinate2D(latitude: 51.296409, longitude: 1.065220))), Edge(point1: CLLocationCoordinate2D(latitude: 51.296409, longitude: 1.065220), point2: CLLocationCoordinate2D(latitude: 51.296630, longitude: 1.064984)), Edge(point1: CLLocationCoordinate2D(latitude: 51.296630, longitude: 1.064984), point2: CLLocationCoordinate2D(latitude: 51.296701, longitude: 1.065161)),
                         Edge(point1: CLLocationCoordinate2D(latitude: 51.296701, longitude: 1.065161), point2: CLLocationCoordinate2D(latitude: 51.296694, longitude: 1.065198)), Edge(point1: CLLocationCoordinate2D(latitude: 51.296694, longitude: 1.065198), point2: CLLocationCoordinate2D(latitude:  51.296675, longitude: 1.065226))]
     
-    // parking Spaces list of coordinates for each parking space
     
+    //This variable has all the parking spaces in the parking lot, each of them
+    //represented with the four coordinates of its corners
     static var parkingSpacesList
         = [
             //First space
@@ -278,9 +291,10 @@ class Position {
             )
     ]
     
-    
-    //route lines and free parking space coordinates
-    
+ 
+    //The first element of this array has the coordinates of a free parking space used 
+    //as an example in the app. The second element is a path that shows which route the 
+    //car has to follow to get to that free parking space
     static var route = [
         Route(edge1: CLLocationCoordinate2D(latitude: 51.296543, longitude: 1.065025),
               edge2: CLLocationCoordinate2D(latitude: 51.296531, longitude: 1.064996),

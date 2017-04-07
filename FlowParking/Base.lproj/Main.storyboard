@@ -108,7 +108,7 @@
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="1Ib-GE-e1e">
                                 <rect key="frame" x="20" y="36" width="374" height="651"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <string key="text">Parking with Beacons is an app developed for the company FlowParking to be able to localise a car in a map, inside an underground parking area, through the use of Bluetooth devices called Beacons. The application receives the identification and signal strength of the closest Beacons and through algorithms of trilateration and projection in the road, is able to return the position of the car.</string>
+                                <string key="text">FlowParking is an app developed for the company FlowParking to be able to localise a car in a map, inside an underground parking area, through the use of Bluetooth devices called Beacons. The application receives the identification and signal strength of the closest Beacons and through algorithms of trilateration and projection on the road, is able to return the position of the car.</string>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="23"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
