@@ -20,7 +20,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		11225B081E54BDF40036D6C9 /* FlowParking.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = FlowParking.entitlements; sourceTree = "<group>"; };
 		115BCAF61E8B217B0079B914 /* ParkingSpaces.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParkingSpaces.swift; sourceTree = "<group>"; };
 		117E01F71E93D224006E5059 /* Route.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Route.swift; sourceTree = "<group>"; };
 		117E01F91E93D4F6006E5059 /* Position.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Position.swift; sourceTree = "<group>"; };
@@ -85,7 +84,6 @@
 				11DBDF341E9528AC0016ACAC /* Assets.xcassets */,
 				11EFA6EC1E880DB2001F3B93 /* Model */,
 				11EFA6EB1E880D74001F3B93 /* Controller */,
-				11225B081E54BDF40036D6C9 /* FlowParking.entitlements */,
 				D97DB7D61E326D6E008ABC9E /* AppDelegate.swift */,
 				D97DB7DA1E326D6E008ABC9E /* Main.storyboard */,
 				D97DB7DF1E326D6E008ABC9E /* LaunchScreen.storyboard */,

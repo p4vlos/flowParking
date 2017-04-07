@@ -2,8 +2,14 @@
 //  ViewController.swift
 //  flowPark
 //
-//  Created by Diana Karina Vainberg Gauna on 16/02/2017.
-//  Copyright © 2017 Diana Karina Vainberg Gauna. All rights reserved.
+//  Created by Diana Karina Vainberg Gauna and Pavlos Nicolaou on 16/02/2017.
+//  Copyright © 2017 Diana Karina Vainberg Gauna and Pavlos Nicolaou. All rights reserved.
+//
+//  Main functionality of the whole app is in this View Controller, Getting RSSI and Accuracy from beacons
+//  around the device. Right after we get 3 beacons' accuracies we are using trilateration algorithm that
+//  returns a position that it should be user's location. Afterwards we are doing projection to the route line
+//  that is closest to the trilateration's results and printing route line to a free parking space that we added manually
+//  for demonstration of the app.
 //
 
 import UIKit
@@ -13,20 +19,21 @@ import MapKit
 
 class ViewController: UIViewController, CLLocationManagerDelegate {
     
-    
+    //Attaching the MapView IBOutlet from the storyboard
     @IBOutlet weak var mapView: MKMapView!
-    
-    
-    var mapHasCenteredOnce = false
     
     static var message: String = ""
     
     let latitude = 51.296634
     let longitude = 1.065126
     var locationManager: CLLocationManager!
+    
     //Position of one of the beacons
     var position = (0.0, 0.0)
+    
+    // Boolean for deleting the polyline from the map
     var deletePolyline = false
+    // An extra polyline variable we would like to use
     var polylineAux = MKPolyline()
     var closestEdgeLat = 0.0
     
@@ -36,6 +43,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         
         locationManager = CLLocationManager()
         locationManager.delegate = self
+        //location services will be always on
         locationManager.requestAlwaysAuthorization()
         
         // setting map view delegate with controller
@@ -51,11 +59,12 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         let region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: latitude, longitude: longitude), span: span)
         mapView.setRegion(region, animated: true)
         
+        //calling addPlygons when view did load to draw the parking spaces when the Map View is created
         addPolygons()
         
     }
     
-    // MARK: - Draw on tha map
+    // MARK: - Draw on tha map the parking spaces so the user ca see them clearly
     
     func addPolygons() {
         mapView?.delegate = self
@@ -67,25 +76,34 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         }
     }
     
-    // MARK: - Draw route line
+    // MARK: - Draw route line and draw a free parking space
     
     func addPolyline() {
         mapView?.delegate = self
         
         for line in Position.route {
             let polyline = MKPolyline(coordinates: &line.coordinates, count: 5)
-            if deletePolyline == true{
+            
+            // we are checking if deletePolyline is true to delete the previous polyline and draw a new one
+            if deletePolyline == true {
+                //delete the polyline  and swift detelePolyline to false
                 mapView?.remove(polylineAux)
                 deletePolyline = false
             }
+            
+            //adding the new polyline to a free parking space
             mapView?.add(polyline)
+            
+            //adding the polyline to polylineAux so we can delete it right after we have a new position and a new polyline
             polylineAux = polyline
             
         }
+        //delete  previous polyline is true right after 1st loop
         deletePolyline = true
     }
     
-    // Returns projection point and distance
+    // MARK: - Returns projection point and distance
+    
     func projectNodeToEdge(point: CLLocationCoordinate2D) -> (CLLocationCoordinate2D, Edge) {
         
         var dist = -1.0
@@ -127,7 +145,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         return (proj, closestEdge)
         
     }
-    //Returns distance from a point to an edge
+    
+    // MARK: - Returns distance from a point to an edge
+    
     func distance(pA: CLLocationCoordinate2D, pB: CLLocationCoordinate2D) -> Double {
         let dx = pA.latitude - pB.latitude
         let dy = pA.longitude - pB.longitude
@@ -178,9 +198,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         
     }
     
-    
-    
-    //Beacon's code
     func locationManager(_ manager: CLLocationManager, didRangeBeacons beacons: [CLBeacon], in region: CLBeaconRegion) {
         
         
@@ -379,6 +396,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
             
         } else {
             // No beacons around Alert
+            
             // create the alert
             let alert = UIAlertController(title: "No beacons around", message: "Out of range", preferredStyle: UIAlertControllerStyle.alert)
             
@@ -393,7 +411,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 }
 
 
-//MKMapViewDelegate
+// MARK: - Extension MKMapViewDelegate
+// Choosing the color and line size of both Polylines and Polygones
+
 extension ViewController: MKMapViewDelegate {
     
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {

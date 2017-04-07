@@ -2,8 +2,8 @@
 //  Position.swift
 //  FlowParking
 //
-//  Created by Pavlos Nicolaou on 04/04/2017.
-//  Copyright © 2017 Pavlos Nicolaou. All rights reserved.
+//  Created by Pavlos Nicolaou and Diana Karina Vainberg Gauna on 04/04/2017.
+//  Copyright © 2017 Diana Karina Vainberg Gauna and Pavlos Nicolaou. All rights reserved.
 //
 
 import UIKit
@@ -11,7 +11,7 @@ import MapKit
 
 class Position {
     
-    
+    // Beacons' locations
     static var beaconsPos: [Int: [Double]] = [42397: [51.296624, 1.064893],
                                               1819: [51.296529, 1.064997],
                                               59845: [51.296441, 1.065092],
@@ -30,8 +30,7 @@ class Position {
                         Edge(point1: CLLocationCoordinate2D(latitude: 51.296675, longitude: 1.065226), point2: CLLocationCoordinate2D(latitude: 51.296497, longitude: 1.065427)), Edge(point1: CLLocationCoordinate2D(latitude: 51.296497, longitude: 1.065427), point2: CLLocationCoordinate2D(latitude: 51.296467, longitude: 1.065435)), Edge(point1: CLLocationCoordinate2D(latitude: 51.296467, longitude: 1.065435), point2: CLLocationCoordinate2D(latitude: 51.296451, longitude: 1.065422)), Edge(point1: CLLocationCoordinate2D(latitude: 51.296451, longitude: 1.065422), point2: (CLLocationCoordinate2D(latitude: 51.296389, longitude: 1.065267))), Edge(point1: CLLocationCoordinate2D(latitude: 51.296389, longitude: 1.065267), point2: (CLLocationCoordinate2D(latitude: 51.296409, longitude: 1.065220))), Edge(point1: CLLocationCoordinate2D(latitude: 51.296409, longitude: 1.065220), point2: CLLocationCoordinate2D(latitude: 51.296630, longitude: 1.064984)), Edge(point1: CLLocationCoordinate2D(latitude: 51.296630, longitude: 1.064984), point2: CLLocationCoordinate2D(latitude: 51.296701, longitude: 1.065161)),
                         Edge(point1: CLLocationCoordinate2D(latitude: 51.296701, longitude: 1.065161), point2: CLLocationCoordinate2D(latitude: 51.296694, longitude: 1.065198)), Edge(point1: CLLocationCoordinate2D(latitude: 51.296694, longitude: 1.065198), point2: CLLocationCoordinate2D(latitude:  51.296675, longitude: 1.065226))]
     
-    
-    
+    // parking Spaces list of coordinates for each parking space
     
     static var parkingSpacesList
         = [
@@ -278,6 +277,9 @@ class Position {
                 c4: CLLocationCoordinate2D(latitude: 51.296472, longitude: 1.065513)
             )
     ]
+    
+    
+    //route lines and free parking space coordinates
     
     static var route = [
         Route(edge1: CLLocationCoordinate2D(latitude: 51.296543, longitude: 1.065025),

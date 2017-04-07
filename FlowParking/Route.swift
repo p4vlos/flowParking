@@ -2,8 +2,11 @@
 //  Route.swift
 //  FlowParking
 //
-//  Created by Pavlos Nicolaou on 04/04/2017.
-//  Copyright © 2017 Pavlos Nicolaou. All rights reserved.
+//  Created by Pavlos Nicolaou and Diana Karina Vainberg Gauna on 04/04/2017.
+//  Copyright © 2017 Diana Karina Vainberg Gauna and Pavlos Nicolaou. All rights reserved.
+//
+//  Route Object is created to add the coordinates of the route line to a free parking space
+//  and also the coordinates for the parking space so we can show that it is free
 //
 
 import MapKit

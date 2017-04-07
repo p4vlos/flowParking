@@ -2,8 +2,8 @@
 //  Edge.swift
 //  FlowParking
 //
-//  Created by Diana Karina Vainberg Gauna on 06/04/2017.
-//  Copyright © 2017 Pavlos Nicolaou. All rights reserved.
+//  Created by Diana Karina Vainberg Gauna and Pavlos Nicolaou on 06/04/2017.
+//  Copyright © 2017 Diana Karina Vainberg Gauna and Pavlos Nicolaou. All rights reserved.
 //
 
 import UIKit

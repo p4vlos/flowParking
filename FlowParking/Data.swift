@@ -2,8 +2,8 @@
 //  data.swift
 //  FlowParking
 //
-//  Created by Diana Karina Vainberg Gauna on 19/03/2017.
-//  Copyright © 2017 Diana Karina Vainberg Gauna. All rights reserved.
+//  Created by Pavlos Nicolaou and Diana Karina Vainberg Gauna on 19/03/2017.
+//  Copyright © 2017 Diana Karina Vainberg Gauna and Pavlos Nicolaou. All rights reserved.
 //
 
 import UIKit

@@ -2,8 +2,8 @@
 //  AppDelegate.swift
 //  flowPark
 //
-//  Created by Diana Karina Vainberg Gauna on 16/02/2017.
-//  Copyright © 2017 Diana Karina Vainberg Gauna. All rights reserved.
+//  Created by Diana Karina Vainberg Gauna and Pavlos Nicolaou on 16/02/2017.
+//  Copyright © 2017 Diana Karina Vainberg Gauna and Pavlos Nicolaou. All rights reserved.
 //
 
 import UIKit
