@@ -272,6 +272,14 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
                         closestEdgeLat = projectedPosition.1.point1.latitude
                         switch closestEdgeLat{
                         case 51.296467:
+                            let polyline = MKPolyline(coordinates: &Position.route[0].coordinates, count: 5)
+                            mapView?.remove(polyline)
+                            Position.route[0] =
+                                Route(edge1: CLLocationCoordinate2D(latitude: 51.296543, longitude: 1.065025),
+                                      edge2: CLLocationCoordinate2D(latitude: 51.296531, longitude: 1.064996),
+                                      edge3: CLLocationCoordinate2D(latitude: 51.296478, longitude: 1.065052),
+                                      edge4: CLLocationCoordinate2D(latitude: 51.296495, longitude: 1.065078),
+                                      edge5: CLLocationCoordinate2D(latitude: 51.296543, longitude: 1.065025))
                             Position.route[1] =
                                 Route(
                                     edge1: CLLocationCoordinate2D(latitude: point.coordinate.latitude, longitude: point.coordinate.longitude),
@@ -280,6 +288,14 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
                                     edge4: CLLocationCoordinate2D(latitude: 51.296536, longitude: 1.065091),
                                     edge5: CLLocationCoordinate2D(latitude: 51.296519, longitude: 1.065053))
                         case 51.296451:
+                            let polyline = MKPolyline(coordinates: &Position.route[0].coordinates, count: 5)
+                            mapView?.remove(polyline)
+                            Position.route[0] =
+                                Route(edge1: CLLocationCoordinate2D(latitude: 51.296543, longitude: 1.065025),
+                                      edge2: CLLocationCoordinate2D(latitude: 51.296531, longitude: 1.064996),
+                                      edge3: CLLocationCoordinate2D(latitude: 51.296478, longitude: 1.065052),
+                                      edge4: CLLocationCoordinate2D(latitude: 51.296495, longitude: 1.065078),
+                                      edge5: CLLocationCoordinate2D(latitude: 51.296543, longitude: 1.065025))
                             Position.route[1] =
                                 Route(
                                     edge1: CLLocationCoordinate2D(latitude: point.coordinate.latitude, longitude: point.coordinate.longitude),
@@ -288,6 +304,14 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
                                     edge4: CLLocationCoordinate2D(latitude: 51.296536, longitude: 1.065091),
                                     edge5: CLLocationCoordinate2D(latitude: 51.296519, longitude: 1.065053))
                         case 51.296389:
+                            let polyline = MKPolyline(coordinates: &Position.route[0].coordinates, count: 5)
+                            mapView?.remove(polyline)
+                            Position.route[0] =
+                                Route(edge1: CLLocationCoordinate2D(latitude: 51.296543, longitude: 1.065025),
+                                      edge2: CLLocationCoordinate2D(latitude: 51.296531, longitude: 1.064996),
+                                      edge3: CLLocationCoordinate2D(latitude: 51.296478, longitude: 1.065052),
+                                      edge4: CLLocationCoordinate2D(latitude: 51.296495, longitude: 1.065078),
+                                      edge5: CLLocationCoordinate2D(latitude: 51.296543, longitude: 1.065025))
                             Position.route[1] =
                                 Route(
                                     edge1: CLLocationCoordinate2D(latitude: point.coordinate.latitude, longitude: point.coordinate.longitude),
@@ -296,6 +320,14 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
                                     edge4: CLLocationCoordinate2D(latitude: 51.296536, longitude: 1.065091),
                                     edge5: CLLocationCoordinate2D(latitude: 51.296519, longitude: 1.065053))
                         case 51.296409:
+                            let polyline = MKPolyline(coordinates: &Position.route[0].coordinates, count: 5)
+                            mapView?.remove(polyline)
+                            Position.route[0] =
+                                Route(edge1: CLLocationCoordinate2D(latitude: 51.296543, longitude: 1.065025),
+                                      edge2: CLLocationCoordinate2D(latitude: 51.296531, longitude: 1.064996),
+                                      edge3: CLLocationCoordinate2D(latitude: 51.296478, longitude: 1.065052),
+                                      edge4: CLLocationCoordinate2D(latitude: 51.296495, longitude: 1.065078),
+                                      edge5: CLLocationCoordinate2D(latitude: 51.296543, longitude: 1.065025))
                             Position.route[1] =
                                 Route(
                                     edge1: CLLocationCoordinate2D(latitude: point.coordinate.latitude, longitude: point.coordinate.longitude),
@@ -321,6 +353,14 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
                                     edge4: CLLocationCoordinate2D(latitude: 51.296661, longitude:1.065221),
                                     edge5: CLLocationCoordinate2D(latitude: 51.296650, longitude:1.065193))
                         default:
+                            let polyline = MKPolyline(coordinates: &Position.route[0].coordinates, count: 5)
+                            mapView?.remove(polyline)
+                            Position.route[0] =
+                                Route(edge1: CLLocationCoordinate2D(latitude: 51.296543, longitude: 1.065025),
+                                      edge2: CLLocationCoordinate2D(latitude: 51.296531, longitude: 1.064996),
+                                      edge3: CLLocationCoordinate2D(latitude: 51.296478, longitude: 1.065052),
+                                      edge4: CLLocationCoordinate2D(latitude: 51.296495, longitude: 1.065078),
+                                      edge5: CLLocationCoordinate2D(latitude: 51.296543, longitude: 1.065025))
                             Position.route[1] =
                                 Route(
                                     edge1: CLLocationCoordinate2D(latitude: point.coordinate.latitude, longitude: point.coordinate.longitude),
