@@ -228,15 +228,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     //the free parking space according to the obtained position.
     func locationManager(_ manager: CLLocationManager, didRangeBeacons beacons: [CLBeacon], in region: CLBeaconRegion) {
         
-        let date = NSDate()
-        let calendar = NSCalendar.current
-        let hour = calendar.component(.hour, from: date as Date)
-        let minutes = calendar.component(.minute, from: date as Date)
-        let seconds = calendar.component(.second, from: date as Date)
-        let time = "\(hour):\(minutes):\(seconds)"
-        print(time)
-        let total = "Number of beacons: \(beacons.count)"
-        print(total)
         
         var posx1 = 0.0
         var posy1 = 0.0
@@ -300,7 +291,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
                         
                         //Project position to the driving path
                         let projectedPosition = projectNodeToEdge(point: CLLocationCoordinate2D(latitude: pos.0, longitude: pos.1))
-                        print("Projected position: \(projectedPosition) \n")
+                        //print("Projected position: \(projectedPosition) \n")
                         
                         
                         //First we remove previous annotations on the map
