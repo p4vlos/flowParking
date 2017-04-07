@@ -13,27 +13,27 @@ class Position {
     
     
     static var beaconsPos: [Int: [Double]] = [42397: [51.296624, 1.064893],
-                                       1819: [51.296529, 1.064997],
-                                       59845: [51.296441, 1.065092],
-                                       54060: [51.296356, 1.065246],
-                                       34499: [51.296692, 1.065065],
-                                       2627: [51.296634, 1.065126],
-                                       29950: [51.296548, 1.065225],
-                                       20588: [51.296458, 1.065325],
-                                       11731: [51.296409, 1.065383],
-                                       59879: [51.296761, 1.065229],
-                                       9483: [51.296685, 1.065357],
-                                       23240: [51.296592, 1.065457],
-                                       25488: [51.296497, 1.065561]]
-   
+                                              1819: [51.296529, 1.064997],
+                                              59845: [51.296441, 1.065092],
+                                              54060: [51.296356, 1.065246],
+                                              34499: [51.296692, 1.065065],
+                                              2627: [51.296634, 1.065126],
+                                              29950: [51.296548, 1.065225],
+                                              20588: [51.296458, 1.065325],
+                                              11731: [51.296409, 1.065383],
+                                              59879: [51.296761, 1.065229],
+                                              9483: [51.296685, 1.065357],
+                                              23240: [51.296592, 1.065457],
+                                              25488: [51.296497, 1.065561]]
+    
     static var edges = [Edge(point1: CLLocationCoordinate2D(latitude: 51.296759, longitude: 1.065430), point2: CLLocationCoordinate2D(latitude: 51.296675, longitude: 1.065226)),
                         Edge(point1: CLLocationCoordinate2D(latitude: 51.296675, longitude: 1.065226), point2: CLLocationCoordinate2D(latitude: 51.296497, longitude: 1.065427)), Edge(point1: CLLocationCoordinate2D(latitude: 51.296497, longitude: 1.065427), point2: CLLocationCoordinate2D(latitude: 51.296467, longitude: 1.065435)), Edge(point1: CLLocationCoordinate2D(latitude: 51.296467, longitude: 1.065435), point2: CLLocationCoordinate2D(latitude: 51.296451, longitude: 1.065422)), Edge(point1: CLLocationCoordinate2D(latitude: 51.296451, longitude: 1.065422), point2: (CLLocationCoordinate2D(latitude: 51.296389, longitude: 1.065267))), Edge(point1: CLLocationCoordinate2D(latitude: 51.296389, longitude: 1.065267), point2: (CLLocationCoordinate2D(latitude: 51.296409, longitude: 1.065220))), Edge(point1: CLLocationCoordinate2D(latitude: 51.296409, longitude: 1.065220), point2: CLLocationCoordinate2D(latitude: 51.296630, longitude: 1.064984)), Edge(point1: CLLocationCoordinate2D(latitude: 51.296630, longitude: 1.064984), point2: CLLocationCoordinate2D(latitude: 51.296701, longitude: 1.065161)),
-                            Edge(point1: CLLocationCoordinate2D(latitude: 51.296701, longitude: 1.065161), point2: CLLocationCoordinate2D(latitude: 51.296694, longitude: 1.065198)), Edge(point1: CLLocationCoordinate2D(latitude: 51.296694, longitude: 1.065198), point2: CLLocationCoordinate2D(latitude:  51.296675, longitude: 1.065226))]
+                        Edge(point1: CLLocationCoordinate2D(latitude: 51.296701, longitude: 1.065161), point2: CLLocationCoordinate2D(latitude: 51.296694, longitude: 1.065198)), Edge(point1: CLLocationCoordinate2D(latitude: 51.296694, longitude: 1.065198), point2: CLLocationCoordinate2D(latitude:  51.296675, longitude: 1.065226))]
     
     
-   
     
-   static var parkingSpacesList
+    
+    static var parkingSpacesList
         = [
             //First space
             ParkingSpace(
@@ -280,17 +280,17 @@ class Position {
     ]
     
     static var route = [
-        Route(edge1: CLLocationCoordinate2D(latitude: 51.296597, longitude: 1.065309),
-              edge2: CLLocationCoordinate2D(latitude: 51.296470, longitude: 1.065455),
-              edge3: CLLocationCoordinate2D(latitude: 51.296386, longitude: 1.065269),
-              edge4: CLLocationCoordinate2D(latitude: 51.296536, longitude: 1.065091),
-              edge5: CLLocationCoordinate2D(latitude: 51.296519, longitude: 1.065053)
-            ),
         Route(edge1: CLLocationCoordinate2D(latitude: 51.296543, longitude: 1.065025),
               edge2: CLLocationCoordinate2D(latitude: 51.296531, longitude: 1.064996),
               edge3: CLLocationCoordinate2D(latitude: 51.296478, longitude: 1.065052),
               edge4: CLLocationCoordinate2D(latitude: 51.296495, longitude: 1.065078),
               edge5: CLLocationCoordinate2D(latitude: 51.296543, longitude: 1.065025)
-            )
+        ),
+        Route(edge1: CLLocationCoordinate2D(latitude: 51.296597, longitude: 1.065309),
+              edge2: CLLocationCoordinate2D(latitude: 51.296470, longitude: 1.065455),
+              edge3: CLLocationCoordinate2D(latitude: 51.296386, longitude: 1.065269),
+              edge4: CLLocationCoordinate2D(latitude: 51.296536, longitude: 1.065091),
+              edge5: CLLocationCoordinate2D(latitude: 51.296519, longitude: 1.065053)
+        )
     ]
 }

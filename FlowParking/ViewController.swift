@@ -24,8 +24,12 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     let latitude = 51.296634
     let longitude = 1.065126
     var locationManager: CLLocationManager!
-    
+    //Position of one of the beacons
+    var position = (0.0, 0.0)
     var deletePolyline = false
+    var polylineAux = MKPolyline()
+    var closestEdgeLat = 0.0
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -69,24 +73,24 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         mapView?.delegate = self
         
         for line in Position.route {
-            let polyline2 = MKPolyline(coordinates: &line.coordinates, count:  line.coordinates.count)
-            mapView?.add(polyline2)
-            
-            let polyline = polyline2
-            if deletePolyline == true {
-                mapView?.remove(polyline)
+            let polyline = MKPolyline(coordinates: &line.coordinates, count: 5)
+            if deletePolyline == true{
+                mapView?.remove(polylineAux)
+                deletePolyline = false
             }
-            //let polyline2 = polyline
-            deletePolyline = true
+            mapView?.add(polyline)
+            polylineAux = polyline
             
         }
+        deletePolyline = true
     }
     
     // Returns projection point and distance
-    func projectNodeToEdge(point: CLLocationCoordinate2D) -> (CLLocationCoordinate2D) {
+    func projectNodeToEdge(point: CLLocationCoordinate2D) -> (CLLocationCoordinate2D, Edge) {
         
         var dist = -1.0
         var proj = CLLocationCoordinate2D()
+        var closestEdge = Edge(point1: CLLocationCoordinate2D(), point2: CLLocationCoordinate2D())
         
         for edge in Position.edges {
             
@@ -110,14 +114,17 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
             if dist == -1.0{
                 dist = d
                 proj = p
+                closestEdge = edge
             }
             if d < dist {
                 dist = d
                 proj = p
+                closestEdge = edge
+                
             }
             
         }
-        return (proj)
+        return (proj, closestEdge)
         
     }
     //Returns distance from a point to an edge
@@ -163,10 +170,12 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
             let beaconRegion = CLBeaconRegion(proximityUUID: uuid as UUID, identifier: "MyBeacon")
             locationManager.startMonitoring(for: beaconRegion)
             locationManager.startRangingBeacons(in: beaconRegion)
+            
         }
         else {
             NSLog("Invalid UUID format")
         }
+        
     }
     
     
@@ -192,8 +201,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         var posy2 = 0.0
         var posx3 = 0.0
         var posy3 = 0.0
-        //Position of one of the beacons
-        var position = (51.296685, 1.065357)
+        
         
         if beacons.count > 0 {
             
@@ -238,40 +246,12 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
                     }
                     
                     let data = Data(beaconA: [posx1, posy1], beaconB: [posx2, posy2], beaconC: [posx3, posy3], distA: usefulBeacons[i].accuracy, distB: usefulBeacons[i+1].accuracy, distC: usefulBeacons[i+2].accuracy)
-                    var pos = data.trilateration()
+                    let pos = data.trilateration()
+                    print("Trilateration position: \(pos) \n")
+                    ViewController.message += "Trilateration position: \(pos) \n"
                     
-                    if pos.0.isNaN || pos.0.isInfinite || pos.1.isNaN || pos.1.isInfinite {
-                        //Use the previous position obtained
-                        pos = position
+                    if !(pos.0.isNaN || pos.0.isInfinite || pos.1.isNaN || pos.1.isInfinite) {
                         
-                        // Add annotation to the map with the position
-                        let point = MKPointAnnotation()
-                        point.coordinate.latitude = pos.0
-                        point.coordinate.longitude = pos.1
-                        self.mapView.removeAnnotations(self.mapView.annotations)
-                        mapView.addAnnotation(point)
-                        
-                        //changed the first position of the rout iwth the point
-                        Position.route = [
-                            Route(
-                            edge1: CLLocationCoordinate2D(latitude: point.coordinate.latitude, longitude: point.coordinate.longitude),
-                            edge2: CLLocationCoordinate2D(latitude: 51.296470, longitude: 1.065455),
-                            edge3: CLLocationCoordinate2D(latitude: 51.296386, longitude: 1.065269),
-                            edge4: CLLocationCoordinate2D(latitude: 51.296536, longitude: 1.065091),
-                            edge5: CLLocationCoordinate2D(latitude: 51.296519, longitude: 1.065053)
-                            ),
-                            Route(
-                            edge1: CLLocationCoordinate2D(latitude: 51.296543, longitude: 1.065025),
-                            edge2: CLLocationCoordinate2D(latitude: 51.296531, longitude: 1.064996),
-                            edge3: CLLocationCoordinate2D(latitude: 51.296478, longitude: 1.065052),
-                            edge4: CLLocationCoordinate2D(latitude: 51.296495, longitude: 1.065078),
-                            edge5: CLLocationCoordinate2D(latitude: 51.296543, longitude: 1.065025)
-                            )]
-                        addPolyline()
-                        
-                    }else {
-                        //Var position is now updated to the newest position
-                        position = pos
                         print("Trilateration position: \(pos) \n")
                         ViewController.message += "Trilateration position: \(pos) \n"
                         
@@ -281,20 +261,115 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
                         ViewController.message += "Projected position: \(projectedPosition) \n"
                         
                         // Add annotation to the map with the position
+                        mapView.removeAnnotations(mapView.annotations)
+                        
                         let point = MKPointAnnotation()
-                        point.coordinate.latitude = projectedPosition.latitude
-                        point.coordinate.longitude = projectedPosition.longitude
-                        self.mapView.removeAnnotations(self.mapView.annotations)
+                        point.coordinate.latitude = projectedPosition.0.latitude
+                        point.coordinate.longitude = projectedPosition.0.longitude
                         mapView.addAnnotation(point)
                         
-                        //changed the first position of the rout iwth the point
-                        Position.route[0] = Route(
-                            edge1: CLLocationCoordinate2D(latitude: point.coordinate.latitude, longitude: point.coordinate.longitude),
-                            edge2: CLLocationCoordinate2D(latitude: 51.296470, longitude: 1.065455),
-                            edge3: CLLocationCoordinate2D(latitude: 51.296386, longitude: 1.065269),
-                            edge4: CLLocationCoordinate2D(latitude: 51.296536, longitude: 1.065091),
-                            edge5: CLLocationCoordinate2D(latitude: 51.296519, longitude: 1.065053)
-                        )
+                        
+                        closestEdgeLat = projectedPosition.1.point1.latitude
+                        switch closestEdgeLat{
+                        case 51.296467:
+                            let polyline = MKPolyline(coordinates: &Position.route[0].coordinates, count: 5)
+                            mapView?.remove(polyline)
+                            Position.route[0] =
+                                Route(edge1: CLLocationCoordinate2D(latitude: 51.296543, longitude: 1.065025),
+                                      edge2: CLLocationCoordinate2D(latitude: 51.296531, longitude: 1.064996),
+                                      edge3: CLLocationCoordinate2D(latitude: 51.296478, longitude: 1.065052),
+                                      edge4: CLLocationCoordinate2D(latitude: 51.296495, longitude: 1.065078),
+                                      edge5: CLLocationCoordinate2D(latitude: 51.296543, longitude: 1.065025))
+                            Position.route[1] =
+                                Route(
+                                    edge1: CLLocationCoordinate2D(latitude: point.coordinate.latitude, longitude: point.coordinate.longitude),
+                                    edge2: CLLocationCoordinate2D(latitude: 51.296451, longitude: 1.065422),
+                                    edge3: CLLocationCoordinate2D(latitude: 51.296386, longitude: 1.065269),
+                                    edge4: CLLocationCoordinate2D(latitude: 51.296536, longitude: 1.065091),
+                                    edge5: CLLocationCoordinate2D(latitude: 51.296519, longitude: 1.065053))
+                        case 51.296451:
+                            let polyline = MKPolyline(coordinates: &Position.route[0].coordinates, count: 5)
+                            mapView?.remove(polyline)
+                            Position.route[0] =
+                                Route(edge1: CLLocationCoordinate2D(latitude: 51.296543, longitude: 1.065025),
+                                      edge2: CLLocationCoordinate2D(latitude: 51.296531, longitude: 1.064996),
+                                      edge3: CLLocationCoordinate2D(latitude: 51.296478, longitude: 1.065052),
+                                      edge4: CLLocationCoordinate2D(latitude: 51.296495, longitude: 1.065078),
+                                      edge5: CLLocationCoordinate2D(latitude: 51.296543, longitude: 1.065025))
+                            Position.route[1] =
+                                Route(
+                                    edge1: CLLocationCoordinate2D(latitude: point.coordinate.latitude, longitude: point.coordinate.longitude),
+                                    edge2: CLLocationCoordinate2D(latitude: 51.296389, longitude: 1.065267),
+                                    edge3: CLLocationCoordinate2D(latitude: 51.296409, longitude: 1.065246),
+                                    edge4: CLLocationCoordinate2D(latitude: 51.296536, longitude: 1.065091),
+                                    edge5: CLLocationCoordinate2D(latitude: 51.296519, longitude: 1.065053))
+                        case 51.296389:
+                            let polyline = MKPolyline(coordinates: &Position.route[0].coordinates, count: 5)
+                            mapView?.remove(polyline)
+                            Position.route[0] =
+                                Route(edge1: CLLocationCoordinate2D(latitude: 51.296543, longitude: 1.065025),
+                                      edge2: CLLocationCoordinate2D(latitude: 51.296531, longitude: 1.064996),
+                                      edge3: CLLocationCoordinate2D(latitude: 51.296478, longitude: 1.065052),
+                                      edge4: CLLocationCoordinate2D(latitude: 51.296495, longitude: 1.065078),
+                                      edge5: CLLocationCoordinate2D(latitude: 51.296543, longitude: 1.065025))
+                            Position.route[1] =
+                                Route(
+                                    edge1: CLLocationCoordinate2D(latitude: point.coordinate.latitude, longitude: point.coordinate.longitude),
+                                    edge2: CLLocationCoordinate2D(latitude: 51.296536, longitude: 1.065091),
+                                    edge3: CLLocationCoordinate2D(latitude: 51.296536, longitude: 1.065091),
+                                    edge4: CLLocationCoordinate2D(latitude: 51.296536, longitude: 1.065091),
+                                    edge5: CLLocationCoordinate2D(latitude: 51.296519, longitude: 1.065053))
+                        case 51.296409:
+                            let polyline = MKPolyline(coordinates: &Position.route[0].coordinates, count: 5)
+                            mapView?.remove(polyline)
+                            Position.route[0] =
+                                Route(edge1: CLLocationCoordinate2D(latitude: 51.296543, longitude: 1.065025),
+                                      edge2: CLLocationCoordinate2D(latitude: 51.296531, longitude: 1.064996),
+                                      edge3: CLLocationCoordinate2D(latitude: 51.296478, longitude: 1.065052),
+                                      edge4: CLLocationCoordinate2D(latitude: 51.296495, longitude: 1.065078),
+                                      edge5: CLLocationCoordinate2D(latitude: 51.296543, longitude: 1.065025))
+                            Position.route[1] =
+                                Route(
+                                    edge1: CLLocationCoordinate2D(latitude: point.coordinate.latitude, longitude: point.coordinate.longitude),
+                                    edge2: CLLocationCoordinate2D(latitude: 51.296536, longitude: 1.065091),
+                                    edge3: CLLocationCoordinate2D(latitude: 51.296536, longitude: 1.065091),
+                                    edge4: CLLocationCoordinate2D(latitude: 51.296536, longitude: 1.065091),
+                                    edge5: CLLocationCoordinate2D(latitude: 51.296519, longitude: 1.065053))
+                        case 51.296630:
+                            let polyline = MKPolyline(coordinates: &Position.route[0].coordinates, count: 5)
+                            mapView?.remove(polyline)
+                            Position.route[0] =
+                                Route(
+                                    edge1: CLLocationCoordinate2D(latitude: 51.296658, longitude: 1.065181),
+                                    edge2: CLLocationCoordinate2D(latitude: 51.296635, longitude: 1.065126),
+                                    edge3: CLLocationCoordinate2D(latitude: 51.296616, longitude: 1.065144),
+                                    edge4: CLLocationCoordinate2D(latitude: 51.296641, longitude: 1.065202),
+                                    edge5: CLLocationCoordinate2D(latitude: 51.296658, longitude: 1.065181))
+                            Position.route[1] =
+                                Route(
+                                    edge1: CLLocationCoordinate2D(latitude: point.coordinate.latitude, longitude: point.coordinate.longitude),
+                                    edge2: CLLocationCoordinate2D(latitude: 51.296701, longitude: 1.065161),
+                                    edge3: CLLocationCoordinate2D(latitude: 51.296708, longitude:1.065182),
+                                    edge4: CLLocationCoordinate2D(latitude: 51.296661, longitude:1.065221),
+                                    edge5: CLLocationCoordinate2D(latitude: 51.296650, longitude:1.065193))
+                        default:
+                            let polyline = MKPolyline(coordinates: &Position.route[0].coordinates, count: 5)
+                            mapView?.remove(polyline)
+                            Position.route[0] =
+                                Route(edge1: CLLocationCoordinate2D(latitude: 51.296543, longitude: 1.065025),
+                                      edge2: CLLocationCoordinate2D(latitude: 51.296531, longitude: 1.064996),
+                                      edge3: CLLocationCoordinate2D(latitude: 51.296478, longitude: 1.065052),
+                                      edge4: CLLocationCoordinate2D(latitude: 51.296495, longitude: 1.065078),
+                                      edge5: CLLocationCoordinate2D(latitude: 51.296543, longitude: 1.065025))
+                            Position.route[1] =
+                                Route(
+                                    edge1: CLLocationCoordinate2D(latitude: point.coordinate.latitude, longitude: point.coordinate.longitude),
+                                    edge2: CLLocationCoordinate2D(latitude: 51.296470, longitude: 1.065455),
+                                    edge3: CLLocationCoordinate2D(latitude: 51.296386, longitude: 1.065269),
+                                    edge4: CLLocationCoordinate2D(latitude: 51.296536, longitude: 1.065091),
+                                    edge5: CLLocationCoordinate2D(latitude: 51.296519, longitude: 1.065053))
+                        }
+                        
                         addPolyline()
                     }
                     
@@ -317,41 +392,13 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     
 }
 
-private extension MKPolyline {
-    convenience init(coordinates coords: Array<CLLocationCoordinate2D>) {
-        let unsafeCoordinates = UnsafeMutablePointer<CLLocationCoordinate2D>.allocate(capacity: coords.count)
-        unsafeCoordinates.initialize(from: coords)
-        
-        self.init(coordinates: unsafeCoordinates, count: coords.count)
-        unsafeCoordinates.deallocate(capacity: coords.count)
-    }
-}
 
 //MKMapViewDelegate
 extension ViewController: MKMapViewDelegate {
-//    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-//        if annotation is MKUserLocation {
-//            return nil
-//        }
-//            
-//        else {
-//            let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "annotationView") ?? MKAnnotationView()
-//            annotationView.image = UIImage(named: "place icon")
-//            annotationView.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
-//            annotationView.canShowCallout = true
-//            return annotationView
-//        }
-//    }
     
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
-        if overlay is MKCircle {
-            let renderer = MKCircleRenderer(overlay: overlay)
-            renderer.fillColor = UIColor.blue.withAlphaComponent(0.5)
-            renderer.strokeColor = UIColor.green
-            renderer.lineWidth = 2
-            return renderer
-            
-        } else if overlay is MKPolyline {
+        
+        if overlay is MKPolyline {
             let renderer = MKPolylineRenderer(overlay: overlay)
             renderer.strokeColor = UIColor.green
             renderer.lineWidth = 3
